@@ -1,0 +1,22 @@
+necesary dependencies: 
+sympy,
+numpy, 
+networkx, 
+matplotlib.pyplot, 
+random, 
+math, 
+gurobipy, 
+gurobipy GRB, 
+qiskit,
+qiskit_aer
+
+
+===== basicQAOA.py =====
+
+- Runs basic maxcut qaoa on given graph and obtains expectation values 
+
+==== decompQAOA.py =====
+
+- Performs decomposition technique on given graph up to solving for fixed K 
+
+
