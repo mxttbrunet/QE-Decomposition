@@ -79,10 +79,10 @@ def buildPaulis(problem, graph):
    offset = 0.0
    if(problem.lower() == "maxcut" or problem.lower() == "max cut"):
       for u, v in graph.edges():
-         pauliList.append(("ZZ", [u, v], -2))
+         pauliList.append(("ZZ", [u, v], -0.5))
          offset += 0.5
-      for x in list(graph.nodes()):
-         pauliList.append(("Z", [x], graph.degree[x]))
+      #for x in list(graph.nodes()):
+      #   pauliList.append(("Z", [x], graph.degree[x]))
       return pauliList, offset
 
    elif(problem.lower() == "mis"):
