@@ -259,14 +259,15 @@ def decompo(g, limit):
    while(len(cg.nodes()) > limit):
       V2andK, K, V1, V2 = getInduced(cg)
       print(f"---Round {round}: K={K}, V1={V1}, V2={V2}---")
-      #draw(V2andK)
-      #mergedN, cg, K = mergeAndUpdate(cg, V2andK, K, V2, gNum)
-      #V2andK = cg.subgraph(K+V2)
-      #draw(cg)
-      #print(f"mergedN: {mergedN}")
-      #gNum -= len(mergedN)
-      #tableUpdate(mergedN, fixTable)
-      #print(f"fixTable:{fixTable}")
+      if(len(K) > 3):
+         #draw(V2andK)
+         mergedN, cg, K = mergeAndUpdate(cg, V2andK, K, V2, gNum)
+         V2andK = cg.subgraph(K+V2)
+         #draw(cg)
+         print(f"mergedN: {mergedN}")
+         gNum -= len(mergedN)
+         tableUpdate(mergedN, fixTable)
+         print(f"fixTable:{fixTable}")
       J_list = ReWeight(V2andK,K,V2)
       #print(J_list)
       cg.remove_nodes_from(V2)
@@ -282,7 +283,9 @@ def decompo(g, limit):
       round+=1
    print(f"!!!seaHat:{cIsh}\n!!!table:{fixTable}")
    draw(cg)
-   print(f"funny maxCUT of this final graph:{nx.approximation.randomized_partitioning(cg, seed=1)}")
+   #print(f"funny maxCUT of this final graph:{nx.approximation.randomized_partitioning(cg, seed=1)}")
+   bestCut, bestSet = bruteMaxCut(cg)
+   print(f"Best cut on final is {bestCut} on {bestSet}\n")
    exit()
 
 
@@ -290,7 +293,7 @@ def decompo(g, limit):
 
 def mergeAndUpdate(g0, sub0, K, V2, gStart):
    kSingle, kDouble, vSingle, vDouble = kExps(sub0, K, V2)
-   #print(f"K single: {kSingle}\nK double: {kDouble}\nV2 single: {vSingle}\nV2 double:{vDouble}")
+   print(f"K single: {kSingle}\nK double: {kDouble}\nV2 single: {vSingle}\nV2 double:{vDouble}")
    ##maybe look into merging the V1s? 
    gSets = [set(pair[0]) for pair in kDouble.items() if pair[1] >= tau]
    groups = group(gSets)
@@ -375,7 +378,7 @@ def ReWeight(sub, K, V2):
    kM = len(K)
    b = []
    gen = list(genPerms(kM))
-   if(kM <= 3):
+   if(kM <= 20):
       slvRows = []
       fvect = []
       rows = [bin for bin in gen if bin.count('1') <= 1]
@@ -422,6 +425,21 @@ def ReWeight(sub, K, V2):
 
 
 
+def bruteMaxCut(graph):
+   nodes = list(graph.nodes())
+   best = 0
+   bestSet = None
+   for assign in genPerms(len(nodes)):
+      side = {nodes[i]: int(assign[i]) for i in range(len(nodes))}
+      cut = 0
+      for u, v, data in graph.edges(data=True):
+         if side[u] != side[v]:
+            cut += data.get('weight', 1.0)
+      if cut > best:
+         best = cut
+         bestSet = side
+   return best, bestSet
+
 def startUp():
    mode = input("Select operation: Measure mode (0)...Graph mode (1)? \n")
    if(mode == "0"):
@@ -458,11 +476,13 @@ def startUp():
 
    elif(mode == "1"):
       #testG = makeCustom(custom, cn)
-      testG = nx.random_regular_graph(3, 10)
+      testG = nx.random_regular_graph(3, 20)
       for u,v in testG.edges():
          testG[u][v]['weight'] = 1
       draw(testG)
-      print(f"funny maxcut of init:{nx.approximation.randomized_partitioning(testG, seed=1)}")
+      print("")
+      bestCut, bestSet = bruteMaxCut(testG)
+      print(f"best maxCut {bestCut} on {bestSet}\n")
       decompo(testG, M)
 
 
