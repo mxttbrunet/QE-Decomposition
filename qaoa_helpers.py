@@ -29,14 +29,6 @@ def buildPaulis(problem, graph):
             w = graph[u][v].get('weight', 1.0)
             pauliList.append(("ZZ", [u, v], -w / 2))
             offset += 0.5 * w
-        # Linear (diagonal) QUBO terms produced by the decomp reweighting step.
-        # In the Ising mapping z_i = (1 - Z_i)/2:
-        #   J_ii * z_i  →  -J_ii/2 * Z_i  +  J_ii/2  (constant)
-        for v in graph.nodes():
-            nw = graph.nodes[v].get('weight', 0.0)
-            if abs(nw) > 1e-12:
-                pauliList.append(("Z", [v], -nw / 2))
-                offset += nw / 2
         return pauliList, offset
     else:
         print("new Problem?")
@@ -113,10 +105,10 @@ def run_basic_qaoa(graph, reps, problem="maxcut", shots=40000,
     #print("Paulis:", thePauli)
 
     costH = spo.from_sparse_list(thePauli, num_qubits=n)
-    #print("SHIFT:", shift)
+    print("SHIFT:", shift)
 
     result, transpiled_ansatz, objective_func_vals = optimize_qaoa(costH, reps=reps)
-    #print(f"Optimization finished. Final cost: {-1 * result.fun + shift:.4f}")
+    print(f"Optimization finished. Final cost: {-1 * result.fun + shift:.4f}")
 
     sampler = AerSampler()
     sampler.options.default_shots = shots
@@ -125,23 +117,19 @@ def run_basic_qaoa(graph, reps, problem="maxcut", shots=40000,
     optimal_circuit.measure_all()
     backendFinal = Aer.AerSimulator()
     countsF = backendFinal.run(optimal_circuit, shots=shots).result().get_counts()
-    countsFinal = {}
+    countsFinal = countsF
 
-    if filter_z2:
-        for entry in countsF:
-            if sum(int(bit) for bit in entry) <= (n / 2):
-                countsFinal[entry] = countsF[entry]
-    else:
-        countsFinal = countsF
-
-    print(countsFinal)
 
     singExp = {}
     doubExp = {}
     for i in graph_r.nodes():
         singExp[code2[i]] = zExpect(countsFinal, i)
-    for u, v in graph_r.edges():
-        doubExp[(code2[u], code2[v])] = zzExpect(countsFinal, u, v)
+    for u in graph_r.nodes():
+        for v in graph_r.nodes():
+           if(u == v):
+              pass
+           else:
+              doubExp[(code2[u], code2[v])] = zzExpect(countsFinal, u, v)
 
     return singExp, doubExp
 
@@ -189,3 +177,19 @@ def makeCustom(stringy, numN):
             i = 0
     newg.add_weighted_edges_from(edgesN)
     return newg
+
+
+if __name__ == '__main__':
+
+   custG = """
+   1 2
+   2 3
+   3 4
+   4 1
+   """
+   n = 4
+   reps = 1
+   shots = 1600
+   newG = makeCustom(custG, n)
+
+   run_basic_qaoa(newG, reps, problem="maxcut", shots=shots,filter_z2 = False, draw_graph = False)

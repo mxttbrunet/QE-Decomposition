@@ -155,7 +155,7 @@ def _print_objective(G, c_total):
 
 
 def decomp(G_input, M=4):
-    """Algorithm 1 (Decomp) from Ponce et al. 2025."""
+
     G = G_input.copy()
     for u, v in G.edges():
         G[u][v].setdefault('weight', 1.0)
@@ -261,44 +261,57 @@ def decomp(G_input, M=4):
     return G, c_total
 
 
-def reCut(graph, M=4, reps=1, shots=40000):
-    """Full pipeline: decompose graph via Algorithm 1, then run QAOA on the reduced graph."""
+def reCut(graph, M=4, reps=1, shots=1600):
+
     for u, v in graph.edges():
         graph[u][v].setdefault('weight', 1.0)
 
     n_orig = graph.number_of_nodes()
-    print(f"\n=== reCut: {n_orig} nodes, {graph.number_of_edges()} edges, M={M} ===")
 
-    G_reduced, c_total = decomp(graph, M=M)
-
-    n_r = G_reduced.number_of_nodes()
-
-    if n_r == 0:
-        print("[reCut] Empty graph after decomposition.")
-        return {}, {}, c_total, G_reduced
-
-    nx.draw(G_reduced, with_labels=True)
-    plt.title(f"Reduced Graph ({n_r} nodes)")
+    K = list(nx.minimum_node_cut(graph))
+    G_minus_K  = graph.copy()
+    G_minus_K.remove_nodes_from(K)
+    components = sorted(nx.connected_components(G_minus_K), key=len)
+    V2 = list(components[0])
+    V1 = [v for comp in components[1:] for v in comp]
+    print(f"K = {K}\n, V1 = {V1}, V2 = {V2}: ")
+    induced = graph.copy()
+    induced.remove_nodes_from(V1)
+    nx.draw(induced, with_labels = True)
     plt.show()
+    #G_reduced, c_total = decomp(graph, M=M)
+
+    #n_r = G_reduced.number_of_nodes()
+
+    #if n_r == 0:
+    #    print("[reCut] Empty graph after decomposition.")
+    #    return {}, {}, c_total, G_reduced
+
+    #nx.draw(G_reduced, with_labels=True)
+    #plt.title(f"Reduced Graph ({n_r} nodes)")
+    #plt.show()
 
     singExp, doubExp = run_basic_qaoa(
-        G_reduced, reps=reps, problem="maxcut",
-        shots=shots, filter_z2=True, draw_graph=False
+        induced, reps=reps, problem="maxcut",
+        shots=shots, filter_z2=False, draw_graph=False
     )
 
-    return singExp, doubExp, c_total, G_reduced
+    return singExp, doubExp
 
 
 if __name__ == "__main__":
-    n = 5
+    n = 6
 
     custom = """
     1 2
     1 3
+    1 6
     2 3
     2 4
-    3 5
+    3 4
     4 5
+    4 6
+    5 6
     """
 
     testG = makeCustom(custom, n)
@@ -309,11 +322,10 @@ if __name__ == "__main__":
     nx.draw(testG, with_labels=True)
     plt.show()
 
-    sE, dE, offset, G_red = reCut(testG, M=4, reps=1, shots=40000)
+    sE, dE = reCut(testG, M=4, reps=1, shots=1600)
 
     print(f"\nSingle Z expectations: {sE}")
     print(f"Double ZZ expectations: {dE}")
-    print(f"Constant offset from decomp: {offset:.4f}")
 
     CS, part = nx.approximation.one_exchange(testG, seed=1)
     print(f"\nClassical approx (one_exchange): {CS}, partition={part}")
