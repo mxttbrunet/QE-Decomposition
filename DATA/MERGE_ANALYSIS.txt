@@ -1,0 +1,590 @@
+======================================================================
+MERGE / QE-DECOMPOSITION ALGORITHM ANALYSIS
+(algorithm in QE-Decomposition/MERGE_TEMP1.py)
+======================================================================
+Generated: 2026-06-30T13:08:25
+Batch: 30 random 3-regular graphs on 14 nodes (seed = graph index)
+Stopping rule: reduce while |V| > M, with M = 5
+Final MaxCut = bruteMaxCut(reduced graph) + accumulated seaHat constant
+Note: |K|>3 rounds invoke a shot-based QAOA merge (stochastic).
+
+----------------------------------------------------------------------
+AGGREGATE SUMMARY
+----------------------------------------------------------------------
+Graphs run            : 30
+Approximation ratio   : mean=0.974248  min=0.736842  max=1.027778  std=0.055757
+Time per graph (s)    : mean=0.5724  min=0.0221  max=2.2071  total=17.1714
+
+----------------------------------------------------------------------
+PER-GRAPH RESULTS
+----------------------------------------------------------------------
+graph  decomp_maxcut    optimal   approx_ratio       time_s
+    0      16.000000       18.0       0.888889       1.9151
+    1      19.000000       19.0       1.000000       1.0442
+    2      17.000000       17.0       1.000000       0.0366
+    3      19.000000       19.0       1.000000       0.0323
+    4      18.000000       18.0       1.000000       0.0221
+    5      16.500000       18.0       0.916667       0.6997
+    6      16.000000       18.0       0.888889       1.0556
+    7      18.000000       19.0       0.947368       0.6483
+    8      18.000000       18.0       1.000000       0.0453
+    9      18.000000       18.0       1.000000       0.0366
+   10      18.000000       18.0       1.000000       0.0676
+   11      17.990000       18.0       0.999444       0.9370
+   12      19.010000       19.0       1.000526       1.5668
+   13      18.000000       19.0       0.947368       0.9723
+   14      18.000000       18.0       1.000000       0.0350
+   15      18.000000       18.0       1.000000       0.0390
+   16      17.000000       17.0       1.000000       0.0308
+   17      19.000000       19.0       1.000000       0.0431
+   18      18.000000       19.0       0.947368       0.5053
+   19      17.990000       18.0       0.999444       0.8388
+   20      18.610000       19.0       0.979474       2.2071
+   21      17.000000       17.0       1.000000       0.0277
+   22      18.000000       19.0       0.947368       1.1289
+   23      18.500000       18.0       1.027778       0.6910
+   24      14.000000       19.0       0.736842       1.5102
+   25      19.000000       19.0       1.000000       0.4881
+   26      18.000000       18.0       1.000000       0.0422
+   27      18.000000       18.0       1.000000       0.0429
+   28      19.000000       19.0       1.000000       0.0387
+   29      19.000000       19.0       1.000000       0.4229
+
+======================================================================
+PER-GRAPH DETAIL (cut set for each decomposition round)
+======================================================================
+
+GRAPH 0
+  Edge list: (0,2), (0,5), (0,7), (1,5), (1,9), (1,13), (2,7), (2,8), (3,4), (3,6), (3,8), (4,7), (4,9), (5,11), (6,9), (6,12), (8,11), (10,11), (10,12), (10,13), (12,13)
+  Decomposition rounds:
+    round  1 : cut set K = {1, 4, 6}  ->  removed |V2|=1, |K|=3
+    round  2 : cut set K = {11, 12, 13}  ->  removed |V2|=1, |K|=3
+    round  3 : cut set K = {1, 11, 12}  ->  removed |V2|=1, |K|=3
+    round  4 : cut set K = {3, 2, 11}  ->  removed |V2|=1, |K|=3
+    round  5 : cut set K = {0, 2, 4}  ->  removed |V2|=1, |K|=3
+    round  6 : cut set K = {0, 1, 11}  ->  removed |V2|=1, |K|=3
+    round  7 : cut set K = {1, 11, 6}  ->  removed |V2|=1, |K|=3
+    round  8 : cut set K = {0, 11, 4, 6}  ->  removed |V2|=1, |K|=4  (|K|>3 -> QAOA merge applied)
+    round  9 : cut set K = {2, 11, 4, 6}  ->  removed |V2|=1, |K|=4  (|K|>3 -> QAOA merge applied)
+  Reduced graph : 3 nodes, 3 edges
+  seaHat constant      : 16.0000000000
+  bestCut(reduced)     : 0.0000000000
+  Decomp MaxCut result : 16.0000000000
+  Optimal MaxCut       : 18.0000000000
+  Approximation ratio  : 0.8888888889
+  Time taken (s)       : 1.915108
+
+GRAPH 1
+  Edge list: (0,1), (0,7), (0,8), (1,4), (1,11), (2,5), (2,9), (2,13), (3,5), (3,6), (3,13), (4,10), (4,13), (5,8), (6,10), (6,11), (7,11), (7,12), (8,9), (9,12), (10,12)
+  Decomposition rounds:
+    round  1 : cut set K = {8, 2, 3}  ->  removed |V2|=1, |K|=3
+    round  2 : cut set K = {1, 10, 13}  ->  removed |V2|=1, |K|=3
+    round  3 : cut set K = {9, 10, 7}  ->  removed |V2|=1, |K|=3
+    round  4 : cut set K = {8, 1, 7}  ->  removed |V2|=1, |K|=3
+    round  5 : cut set K = {1, 6, 7}  ->  removed |V2|=1, |K|=3
+    round  6 : cut set K = {8, 9, 3, 13}  ->  removed |V2|=1, |K|=4  (|K|>3 -> QAOA merge applied)
+    round  7 : cut set K = {10, 13, -1, 7}  ->  removed |V2|=1, |K|=4  (|K|>3 -> QAOA merge applied)
+  Reduced graph : 4 nodes, 6 edges
+  seaHat constant      : 18.0000000000
+  bestCut(reduced)     : 1.0000000000
+  Decomp MaxCut result : 19.0000000000
+  Optimal MaxCut       : 19.0000000000
+  Approximation ratio  : 1.0000000000
+  Time taken (s)       : 1.044215
+
+GRAPH 2
+  Edge list: (0,1), (0,6), (0,12), (1,6), (1,8), (2,8), (2,9), (2,13), (3,4), (3,5), (3,11), (4,7), (4,11), (5,7), (5,10), (6,13), (7,10), (8,10), (9,12), (9,13), (11,12)
+  Decomposition rounds:
+    round  1 : cut set K = {8, 12}  ->  removed |V2|=6, |K|=2
+    round  2 : cut set K = {1, 2, 12}  ->  removed |V2|=1, |K|=3
+    round  3 : cut set K = {1, 12, 6}  ->  removed |V2|=1, |K|=3
+    round  4 : cut set K = {1, 12, 13}  ->  removed |V2|=1, |K|=3
+  Reduced graph : 5 nodes, 9 edges
+  seaHat constant      : 14.0000000000
+  bestCut(reduced)     : 3.0000000000
+  Decomp MaxCut result : 17.0000000000
+  Optimal MaxCut       : 17.0000000000
+  Approximation ratio  : 1.0000000000
+  Time taken (s)       : 0.036616
+
+GRAPH 3
+  Edge list: (0,3), (0,7), (0,9), (1,2), (1,6), (1,13), (2,8), (2,13), (3,10), (3,12), (4,5), (4,9), (4,11), (5,6), (5,11), (6,8), (7,10), (7,12), (8,12), (9,10), (11,13)
+  Decomposition rounds:
+    round  1 : cut set K = {8, 4}  ->  removed |V2|=6, |K|=2
+    round  2 : cut set K = {2, 4, 6}  ->  removed |V2|=1, |K|=3
+    round  3 : cut set K = {1, 2, 11}  ->  removed |V2|=1, |K|=3
+    round  4 : cut set K = {11, 4, 6}  ->  removed |V2|=1, |K|=3
+  Reduced graph : 5 nodes, 9 edges
+  seaHat constant      : 18.0000000000
+  bestCut(reduced)     : 1.0000000000
+  Decomp MaxCut result : 19.0000000000
+  Optimal MaxCut       : 19.0000000000
+  Approximation ratio  : 1.0000000000
+  Time taken (s)       : 0.032272
+
+GRAPH 4
+  Edge list: (0,1), (0,6), (0,7), (1,6), (1,12), (2,4), (2,8), (2,12), (3,8), (3,10), (3,11), (4,9), (4,11), (5,10), (5,11), (5,13), (6,7), (7,12), (8,13), (9,10), (9,13)
+  Decomposition rounds:
+    round  1 : cut set K = {2}  ->  removed |V2|=5, |K|=1
+    round  2 : cut set K = {8, 4}  ->  removed |V2|=1, |K|=2
+    round  3 : cut set K = {3, 4, 13}  ->  removed |V2|=1, |K|=3
+    round  4 : cut set K = {9, 3, 5}  ->  removed |V2|=1, |K|=3
+    round  5 : cut set K = {3, 4, 5}  ->  removed |V2|=1, |K|=3
+  Reduced graph : 5 nodes, 10 edges
+  seaHat constant      : 16.0000000000
+  bestCut(reduced)     : 2.0000000000
+  Decomp MaxCut result : 18.0000000000
+  Optimal MaxCut       : 18.0000000000
+  Approximation ratio  : 1.0000000000
+  Time taken (s)       : 0.022127
+
+GRAPH 5
+  Edge list: (0,1), (0,3), (0,5), (1,2), (1,3), (2,8), (2,11), (3,12), (4,6), (4,11), (4,13), (5,8), (5,9), (6,9), (6,13), (7,9), (7,10), (7,12), (8,10), (10,13), (11,12)
+  Decomposition rounds:
+    round  1 : cut set K = {10, 4, 6}  ->  removed |V2|=1, |K|=3
+    round  2 : cut set K = {2, 4, 12}  ->  removed |V2|=1, |K|=3
+    round  3 : cut set K = {5, 6, 7}  ->  removed |V2|=1, |K|=3
+    round  4 : cut set K = {0, 1, 12}  ->  removed |V2|=1, |K|=3
+    round  5 : cut set K = {0, 2, 12}  ->  removed |V2|=1, |K|=3
+    round  6 : cut set K = {2, 12, 5}  ->  removed |V2|=1, |K|=3
+    round  7 : cut set K = {2, 10, 5}  ->  removed |V2|=1, |K|=3
+    round  8 : cut set K = {2, 4, 5, 7}  ->  removed |V2|=1, |K|=4  (|K|>3 -> QAOA merge applied)
+  Reduced graph : 4 nodes, 6 edges
+  seaHat constant      : 16.0000000000
+  bestCut(reduced)     : 0.5000000000
+  Decomp MaxCut result : 16.5000000000
+  Optimal MaxCut       : 18.0000000000
+  Approximation ratio  : 0.9166666667
+  Time taken (s)       : 0.699748
+
+GRAPH 6
+  Edge list: (0,2), (0,11), (0,12), (1,7), (1,8), (1,11), (2,3), (2,9), (3,9), (3,13), (4,6), (4,12), (4,13), (5,6), (5,8), (5,10), (6,9), (7,10), (7,13), (8,12), (10,11)
+  Decomposition rounds:
+    round  1 : cut set K = {3, 4, 7}  ->  removed |V2|=1, |K|=3
+    round  2 : cut set K = {2, 3, 6}  ->  removed |V2|=1, |K|=3
+    round  3 : cut set K = {2, 11, 12}  ->  removed |V2|=1, |K|=3
+    round  4 : cut set K = {1, 12, 5}  ->  removed |V2|=1, |K|=3
+    round  5 : cut set K = {11, 5, 7}  ->  removed |V2|=1, |K|=3
+    round  6 : cut set K = {2, 4, 6, 7}  ->  removed |V2|=1, |K|=4  (|K|>3 -> QAOA merge applied)
+    round  7 : cut set K = {11, 12, 5, -2}  ->  removed |V2|=1, |K|=4  (|K|>3 -> QAOA merge applied)
+  Reduced graph : 2 nodes, 1 edges
+  seaHat constant      : 15.0000000000
+  bestCut(reduced)     : 1.0000000000
+  Decomp MaxCut result : 16.0000000000
+  Optimal MaxCut       : 18.0000000000
+  Approximation ratio  : 0.8888888889
+  Time taken (s)       : 1.055583
+
+GRAPH 7
+  Edge list: (0,1), (0,5), (0,8), (1,10), (1,13), (2,3), (2,4), (2,12), (3,11), (3,13), (4,6), (4,10), (5,8), (5,11), (6,7), (6,9), (7,11), (7,12), (8,13), (9,10), (9,12)
+  Decomposition rounds:
+    round  1 : cut set K = {9, 4, 1}  ->  removed |V2|=1, |K|=3
+    round  2 : cut set K = {11, 12, 6}  ->  removed |V2|=1, |K|=3
+    round  3 : cut set K = {3, 4, 12}  ->  removed |V2|=1, |K|=3
+    round  4 : cut set K = {0, 11, 13}  ->  removed |V2|=2, |K|=3
+    round  5 : cut set K = {3, 1, 11}  ->  removed |V2|=2, |K|=3
+    round  6 : cut set K = {1, 3, 12, 6}  ->  removed |V2|=1, |K|=4  (|K|>3 -> QAOA merge applied)
+  Reduced graph : 4 nodes, 6 edges
+  seaHat constant      : 16.0000000000
+  bestCut(reduced)     : 2.0000000000
+  Decomp MaxCut result : 18.0000000000
+  Optimal MaxCut       : 19.0000000000
+  Approximation ratio  : 0.9473684211
+  Time taken (s)       : 0.648265
+
+GRAPH 8
+  Edge list: (0,6), (0,7), (0,9), (1,3), (1,4), (1,7), (2,5), (2,12), (2,13), (3,7), (3,11), (4,10), (4,12), (5,10), (5,13), (6,8), (6,11), (8,10), (8,12), (9,11), (9,13)
+  Decomposition rounds:
+    round  1 : cut set K = {9, 3, 6}  ->  removed |V2|=1, |K|=3
+    round  2 : cut set K = {3, 4, 7}  ->  removed |V2|=1, |K|=3
+    round  3 : cut set K = {9, 6, 7}  ->  removed |V2|=1, |K|=3
+    round  4 : cut set K = {13, 12, 5}  ->  removed |V2|=1, |K|=3
+    round  5 : cut set K = {8, 4, 5}  ->  removed |V2|=1, |K|=3
+    round  6 : cut set K = {8, 4, 13}  ->  removed |V2|=2, |K|=3
+    round  7 : cut set K = {4, 13, 6}  ->  removed |V2|=1, |K|=3
+    round  8 : cut set K = {9, 4, 6}  ->  removed |V2|=1, |K|=3
+  Reduced graph : 5 nodes, 10 edges
+  seaHat constant      : 18.0000000000
+  bestCut(reduced)     : 0.0000000000
+  Decomp MaxCut result : 18.0000000000
+  Optimal MaxCut       : 18.0000000000
+  Approximation ratio  : 1.0000000000
+  Time taken (s)       : 0.045341
+
+GRAPH 9
+  Edge list: (0,6), (0,9), (0,12), (1,3), (1,9), (1,13), (2,7), (2,8), (2,10), (3,5), (3,13), (4,6), (4,8), (4,9), (5,12), (5,13), (6,8), (7,10), (7,11), (10,11), (11,12)
+  Decomposition rounds:
+    round  1 : cut set K = {1, 5}  ->  removed |V2|=2, |K|=2
+    round  2 : cut set K = {9, 5}  ->  removed |V2|=1, |K|=2
+    round  3 : cut set K = {2, 12}  ->  removed |V2|=3, |K|=2
+    round  4 : cut set K = {9, 12}  ->  removed |V2|=1, |K|=2
+    round  5 : cut set K = {8, 12}  ->  removed |V2|=1, |K|=2
+    round  6 : cut set K = {4, 12, 6}  ->  removed |V2|=1, |K|=3
+  Reduced graph : 5 nodes, 8 edges
+  seaHat constant      : 13.0000000000
+  bestCut(reduced)     : 5.0000000000
+  Decomp MaxCut result : 18.0000000000
+  Optimal MaxCut       : 18.0000000000
+  Approximation ratio  : 1.0000000000
+  Time taken (s)       : 0.036627
+
+GRAPH 10
+  Edge list: (0,4), (0,8), (0,12), (1,3), (1,5), (1,10), (2,6), (2,8), (2,9), (3,6), (3,7), (4,7), (4,12), (5,9), (5,10), (6,8), (7,13), (9,11), (10,11), (11,13), (12,13)
+  Decomposition rounds:
+    round  1 : cut set K = {8, 2, 3}  ->  removed |V2|=1, |K|=3
+    round  2 : cut set K = {0, 12, 7}  ->  removed |V2|=1, |K|=3
+    round  3 : cut set K = {8, 12, 7}  ->  removed |V2|=1, |K|=3
+    round  4 : cut set K = {11, 12, 7}  ->  removed |V2|=1, |K|=3
+    round  5 : cut set K = {1, 11, 5}  ->  removed |V2|=1, |K|=3
+    round  6 : cut set K = {2, 11, 5}  ->  removed |V2|=1, |K|=3
+    round  7 : cut set K = {1, 2, 11}  ->  removed |V2|=1, |K|=3
+    round  8 : cut set K = {8, 11, 7}  ->  removed |V2|=1, |K|=3
+    round  9 : cut set K = {8, 11, 3}  ->  removed |V2|=1, |K|=3
+  Reduced graph : 5 nodes, 9 edges
+  seaHat constant      : 16.0000000000
+  bestCut(reduced)     : 2.0000000000
+  Decomp MaxCut result : 18.0000000000
+  Optimal MaxCut       : 18.0000000000
+  Approximation ratio  : 1.0000000000
+  Time taken (s)       : 0.067576
+
+GRAPH 11
+  Edge list: (0,2), (0,6), (0,7), (1,6), (1,8), (1,13), (2,3), (2,12), (3,7), (3,10), (4,6), (4,9), (4,12), (5,8), (5,10), (5,11), (7,13), (8,11), (9,10), (9,11), (12,13)
+  Decomposition rounds:
+    round  1 : cut set K = {2, 4, 13}  ->  removed |V2|=1, |K|=3
+    round  2 : cut set K = {9, 3, 5}  ->  removed |V2|=1, |K|=3
+    round  3 : cut set K = {2, 6, 7}  ->  removed |V2|=1, |K|=3
+    round  4 : cut set K = {1, 11, 5}  ->  removed |V2|=1, |K|=3
+    round  5 : cut set K = {1, 3, 4}  ->  removed |V2|=3, |K|=3
+    round  6 : cut set K = {3, 4, 13, 6}  ->  removed |V2|=1, |K|=4  (|K|>3 -> QAOA merge applied)
+    round  7 : cut set K = {2, 3, 13, 6}  ->  removed |V2|=1, |K|=4  (|K|>3 -> QAOA merge applied)
+  Reduced graph : 4 nodes, 6 edges
+  seaHat constant      : 15.8300000000
+  bestCut(reduced)     : 2.1600000000
+  Decomp MaxCut result : 17.9900000000
+  Optimal MaxCut       : 18.0000000000
+  Approximation ratio  : 0.9994444444
+  Time taken (s)       : 0.936988
+
+GRAPH 12
+  Edge list: (0,4), (0,9), (0,11), (1,6), (1,8), (1,10), (2,3), (2,7), (2,12), (3,7), (3,11), (4,7), (4,8), (5,8), (5,10), (5,13), (6,11), (6,12), (9,10), (9,13), (12,13)
+  Decomposition rounds:
+    round  1 : cut set K = {0, 3, 6}  ->  removed |V2|=1, |K|=3
+    round  2 : cut set K = {3, 12, 7}  ->  removed |V2|=1, |K|=3
+    round  3 : cut set K = {8, 0, 7}  ->  removed |V2|=1, |K|=3
+    round  4 : cut set K = {0, 10, 13}  ->  removed |V2|=1, |K|=3
+    round  5 : cut set K = {8, 10, 13}  ->  removed |V2|=1, |K|=3
+    round  6 : cut set K = {8, 10, 6}  ->  removed |V2|=1, |K|=3
+    round  7 : cut set K = {0, 8, 3, 12}  ->  removed |V2|=1, |K|=4  (|K|>3 -> QAOA merge applied)
+    round  8 : cut set K = {0, 8, 10, 12}  ->  removed |V2|=1, |K|=4  (|K|>3 -> QAOA merge applied)
+  Reduced graph : 5 nodes, 10 edges
+  seaHat constant      : 18.5000000000
+  bestCut(reduced)     : 0.5100000000
+  Decomp MaxCut result : 19.0100000000
+  Optimal MaxCut       : 19.0000000000
+  Approximation ratio  : 1.0005263158
+  Time taken (s)       : 1.566813
+
+GRAPH 13
+  Edge list: (0,1), (0,7), (0,13), (1,3), (1,10), (2,5), (2,10), (2,12), (3,9), (3,10), (4,5), (4,11), (4,12), (5,8), (6,7), (6,11), (6,13), (7,12), (8,9), (8,11), (9,13)
+  Decomposition rounds:
+    round  1 : cut set K = {8, 4, 6}  ->  removed |V2|=1, |K|=3
+    round  2 : cut set K = {10, 12, 5}  ->  removed |V2|=1, |K|=3
+    round  3 : cut set K = {8, 3, 13}  ->  removed |V2|=1, |K|=3
+    round  4 : cut set K = {1, 13, 7}  ->  removed |V2|=1, |K|=3
+    round  5 : cut set K = {8, 4, 13, 7}  ->  removed |V2|=1, |K|=4  (|K|>3 -> QAOA merge applied)
+    round  6 : cut set K = {10, 12, -1}  ->  removed |V2|=1, |K|=3
+    round  7 : cut set K = {10, -2, -1}  ->  removed |V2|=1, |K|=3
+  Reduced graph : 5 nodes, 9 edges
+  seaHat constant      : 15.0000000000
+  bestCut(reduced)     : 3.0000000000
+  Decomp MaxCut result : 18.0000000000
+  Optimal MaxCut       : 19.0000000000
+  Approximation ratio  : 0.9473684211
+  Time taken (s)       : 0.972313
+
+GRAPH 14
+  Edge list: (0,1), (0,4), (0,5), (1,2), (1,5), (2,6), (2,11), (3,4), (3,12), (3,13), (4,5), (6,9), (6,13), (7,8), (7,9), (7,10), (8,10), (8,11), (9,11), (10,12), (12,13)
+  Decomposition rounds:
+    round  1 : cut set K = {2, 3}  ->  removed |V2|=4, |K|=2
+    round  2 : cut set K = {3, 11, 6}  ->  removed |V2|=1, |K|=3
+    round  3 : cut set K = {8, 12, 7}  ->  removed |V2|=1, |K|=3
+    round  4 : cut set K = {8, 9, 12}  ->  removed |V2|=1, |K|=3
+    round  5 : cut set K = {3, 12, 6}  ->  removed |V2|=1, |K|=3
+    round  6 : cut set K = {11, 12, 6}  ->  removed |V2|=1, |K|=3
+  Reduced graph : 5 nodes, 9 edges
+  seaHat constant      : 15.0000000000
+  bestCut(reduced)     : 3.0000000000
+  Decomp MaxCut result : 18.0000000000
+  Optimal MaxCut       : 18.0000000000
+  Approximation ratio  : 1.0000000000
+  Time taken (s)       : 0.035027
+
+GRAPH 15
+  Edge list: (0,3), (0,9), (0,13), (1,3), (1,4), (1,7), (2,7), (2,9), (2,11), (3,13), (4,5), (4,12), (5,12), (5,13), (6,8), (6,10), (6,11), (7,10), (8,11), (8,12), (9,10)
+  Decomposition rounds:
+    round  1 : cut set K = {3, 4, 7}  ->  removed |V2|=1, |K|=3
+    round  2 : cut set K = {4, 12, 13}  ->  removed |V2|=1, |K|=3
+    round  3 : cut set K = {0, 12, 7}  ->  removed |V2|=3, |K|=3
+    round  4 : cut set K = {2, 10, 12}  ->  removed |V2|=3, |K|=3
+    round  5 : cut set K = {9, 12, 7}  ->  removed |V2|=1, |K|=3
+  Reduced graph : 5 nodes, 10 edges
+  seaHat constant      : 13.0000000000
+  bestCut(reduced)     : 5.0000000000
+  Decomp MaxCut result : 18.0000000000
+  Optimal MaxCut       : 18.0000000000
+  Approximation ratio  : 1.0000000000
+  Time taken (s)       : 0.038998
+
+GRAPH 16
+  Edge list: (0,5), (0,9), (0,11), (1,7), (1,10), (1,11), (2,4), (2,11), (2,13), (3,8), (3,10), (3,13), (4,7), (4,13), (5,6), (5,9), (6,8), (6,12), (7,10), (8,12), (9,12)
+  Decomposition rounds:
+    round  1 : cut set K = {3, 11}  ->  removed |V2|=6, |K|=2
+    round  2 : cut set K = {1, 2, 3}  ->  removed |V2|=1, |K|=3
+    round  3 : cut set K = {1, 10, 4}  ->  removed |V2|=1, |K|=3
+    round  4 : cut set K = {2, 3, 4}  ->  removed |V2|=1, |K|=3
+  Reduced graph : 5 nodes, 9 edges
+  seaHat constant      : 16.0000000000
+  bestCut(reduced)     : 1.0000000000
+  Decomp MaxCut result : 17.0000000000
+  Optimal MaxCut       : 17.0000000000
+  Approximation ratio  : 1.0000000000
+  Time taken (s)       : 0.030809
+
+GRAPH 17
+  Edge list: (0,3), (0,4), (0,10), (1,5), (1,7), (1,8), (2,3), (2,4), (2,6), (3,6), (4,9), (5,12), (5,13), (6,11), (7,11), (7,12), (8,10), (8,11), (9,10), (9,13), (12,13)
+  Decomposition rounds:
+    round  1 : cut set K = {10, 3, 4}  ->  removed |V2|=1, |K|=3
+    round  2 : cut set K = {9, 12, 5}  ->  removed |V2|=1, |K|=3
+    round  3 : cut set K = {1, 11, 12}  ->  removed |V2|=1, |K|=3
+    round  4 : cut set K = {1, 12, 9}  ->  removed |V2|=1, |K|=3
+    round  5 : cut set K = {8, 9, 6}  ->  removed |V2|=3, |K|=3
+    round  6 : cut set K = {9, 10, 6}  ->  removed |V2|=1, |K|=3
+    round  7 : cut set K = {10, 4, 6}  ->  removed |V2|=1, |K|=3
+  Reduced graph : 5 nodes, 9 edges
+  seaHat constant      : 15.0000000000
+  bestCut(reduced)     : 4.0000000000
+  Decomp MaxCut result : 19.0000000000
+  Optimal MaxCut       : 19.0000000000
+  Approximation ratio  : 1.0000000000
+  Time taken (s)       : 0.043115
+
+GRAPH 18
+  Edge list: (0,3), (0,10), (0,12), (1,4), (1,6), (1,12), (2,3), (2,6), (2,7), (3,11), (4,5), (4,7), (5,8), (5,10), (6,13), (7,11), (8,11), (8,13), (9,10), (9,12), (9,13)
+  Decomposition rounds:
+    round  1 : cut set K = {5, 11, 13}  ->  removed |V2|=1, |K|=3
+    round  2 : cut set K = {10, 3, 12}  ->  removed |V2|=1, |K|=3
+    round  3 : cut set K = {1, 5, 7}  ->  removed |V2|=1, |K|=3
+    round  4 : cut set K = {3, 6, 7}  ->  removed |V2|=1, |K|=3
+    round  5 : cut set K = {10, 12, 13}  ->  removed |V2|=1, |K|=3
+    round  6 : cut set K = {1, 10, 3, 13}  ->  removed |V2|=1, |K|=4  (|K|>3 -> QAOA merge applied)
+    round  7 : cut set K = {1, -1, 7}  ->  removed |V2|=1, |K|=3
+  Reduced graph : 5 nodes, 9 edges
+  seaHat constant      : 17.0000000000
+  bestCut(reduced)     : 1.0000000000
+  Decomp MaxCut result : 18.0000000000
+  Optimal MaxCut       : 19.0000000000
+  Approximation ratio  : 0.9473684211
+  Time taken (s)       : 0.505300
+
+GRAPH 19
+  Edge list: (0,3), (0,6), (0,7), (1,4), (1,10), (1,11), (2,3), (2,5), (2,10), (3,11), (4,7), (4,9), (5,6), (5,7), (6,13), (8,9), (8,12), (8,13), (9,12), (10,13), (11,12)
+  Decomposition rounds:
+    round  1 : cut set K = {10, 11, 4}  ->  removed |V2|=1, |K|=3
+    round  2 : cut set K = {8, 9, 11}  ->  removed |V2|=1, |K|=3
+    round  3 : cut set K = {9, 11, 13}  ->  removed |V2|=1, |K|=3
+    round  4 : cut set K = {11, 4, 13}  ->  removed |V2|=1, |K|=3
+    round  5 : cut set K = {0, 13, 5}  ->  removed |V2|=1, |K|=3
+    round  6 : cut set K = {0, 4, 5}  ->  removed |V2|=1, |K|=3
+    round  7 : cut set K = {0, 2, 11}  ->  removed |V2|=1, |K|=3
+    round  8 : cut set K = {0, 10, 11, 5}  ->  removed |V2|=1, |K|=4  (|K|>3 -> QAOA merge applied)
+    round  9 : cut set K = {0, 5, 10, 11, 13}  ->  removed |V2|=1, |K|=5  (|K|>3 -> QAOA merge applied)
+  Reduced graph : 5 nodes, 10 edges
+  seaHat constant      : 17.0000000000
+  bestCut(reduced)     : 0.9900000000
+  Decomp MaxCut result : 17.9900000000
+  Optimal MaxCut       : 18.0000000000
+  Approximation ratio  : 0.9994444444
+  Time taken (s)       : 0.838793
+
+GRAPH 20
+  Edge list: (0,4), (0,5), (0,9), (1,9), (1,10), (1,12), (2,5), (2,9), (2,12), (3,7), (3,10), (3,13), (4,6), (4,11), (5,8), (6,7), (6,8), (7,11), (8,10), (11,13), (12,13)
+  Decomposition rounds:
+    round  1 : cut set K = {11, 3, 12}  ->  removed |V2|=1, |K|=3
+    round  2 : cut set K = {8, 4, 7}  ->  removed |V2|=1, |K|=3
+    round  3 : cut set K = {9, 10, 12}  ->  removed |V2|=1, |K|=3
+    round  4 : cut set K = {0, 8, 2}  ->  removed |V2|=1, |K|=3
+    round  5 : cut set K = {3, 4, 12, 7}  ->  removed |V2|=1, |K|=4  (|K|>3 -> QAOA merge applied)
+    round  6 : cut set K = {0, 8, 3, 12}  ->  removed |V2|=2, |K|=4  (|K|>3 -> QAOA merge applied)
+    round  7 : cut set K = {8, 9, 3, 12}  ->  removed |V2|=1, |K|=4  (|K|>3 -> QAOA merge applied)
+    round  8 : cut set K = {0, 8, 12, 9}  ->  removed |V2|=1, |K|=4  (|K|>3 -> QAOA merge applied)
+  Reduced graph : 5 nodes, 10 edges
+  seaHat constant      : 15.3200000000
+  bestCut(reduced)     : 3.2900000000
+  Decomp MaxCut result : 18.6100000000
+  Optimal MaxCut       : 19.0000000000
+  Approximation ratio  : 0.9794736842
+  Time taken (s)       : 2.207147
+
+GRAPH 21
+  Edge list: (0,1), (0,5), (0,6), (1,8), (1,11), (2,3), (2,8), (2,13), (3,6), (3,11), (4,7), (4,9), (4,12), (5,7), (5,10), (6,11), (7,13), (8,13), (9,10), (9,12), (10,12)
+  Decomposition rounds:
+    round  1 : cut set K = {4, 5}  ->  removed |V2|=3, |K|=2
+    round  2 : cut set K = {0, 7}  ->  removed |V2|=2, |K|=2
+    round  3 : cut set K = {0, 13}  ->  removed |V2|=1, |K|=2
+    round  4 : cut set K = {8, 0, 2}  ->  removed |V2|=1, |K|=3
+    round  5 : cut set K = {1, 2, 6}  ->  removed |V2|=2, |K|=3
+  Reduced graph : 5 nodes, 8 edges
+  seaHat constant      : 13.0000000000
+  bestCut(reduced)     : 4.0000000000
+  Decomp MaxCut result : 17.0000000000
+  Optimal MaxCut       : 17.0000000000
+  Approximation ratio  : 1.0000000000
+  Time taken (s)       : 0.027744
+
+GRAPH 22
+  Edge list: (0,1), (0,3), (0,4), (1,8), (1,13), (2,6), (2,11), (2,12), (3,10), (3,12), (4,7), (4,10), (5,6), (5,7), (5,8), (6,9), (7,11), (8,11), (9,10), (9,13), (12,13)
+  Decomposition rounds:
+    round  1 : cut set K = {11, 12, 6}  ->  removed |V2|=1, |K|=3
+    round  2 : cut set K = {0, 8, 13}  ->  removed |V2|=1, |K|=3
+    round  3 : cut set K = {9, 3, 4}  ->  removed |V2|=1, |K|=3
+    round  4 : cut set K = {11, 4, 5}  ->  removed |V2|=1, |K|=3
+    round  5 : cut set K = {9, 11, 12, 5}  ->  removed |V2|=1, |K|=4  (|K|>3 -> QAOA merge applied)
+    round  6 : cut set K = {0, -1, -2}  ->  removed |V2|=2, |K|=3
+  Reduced graph : 5 nodes, 10 edges
+  seaHat constant      : 15.0000000000
+  bestCut(reduced)     : 3.0000000000
+  Decomp MaxCut result : 18.0000000000
+  Optimal MaxCut       : 19.0000000000
+  Approximation ratio  : 0.9473684211
+  Time taken (s)       : 1.128925
+
+GRAPH 23
+  Edge list: (0,1), (0,8), (0,11), (1,9), (1,13), (2,3), (2,7), (2,8), (3,7), (3,12), (4,5), (4,10), (4,12), (5,10), (5,13), (6,8), (6,11), (6,13), (7,10), (9,11), (9,12)
+  Decomposition rounds:
+    round  1 : cut set K = {8, 3, 7}  ->  removed |V2|=1, |K|=3
+    round  2 : cut set K = {9, 3, 4}  ->  removed |V2|=1, |K|=3
+    round  3 : cut set K = {4, 13, 7}  ->  removed |V2|=2, |K|=3
+    round  4 : cut set K = {8, 11, 13}  ->  removed |V2|=1, |K|=3
+    round  5 : cut set K = {0, 9, 13}  ->  removed |V2|=1, |K|=3
+    round  6 : cut set K = {8, 9, 13}  ->  removed |V2|=2, |K|=3
+    round  7 : cut set K = {9, 3, 13, 7}  ->  removed |V2|=1, |K|=4  (|K|>3 -> QAOA merge applied)
+  Reduced graph : 3 nodes, 3 edges
+  seaHat constant      : 17.0000000000
+  bestCut(reduced)     : 1.5000000000
+  Decomp MaxCut result : 18.5000000000
+  Optimal MaxCut       : 18.0000000000
+  Approximation ratio  : 1.0277777778
+  Time taken (s)       : 0.690967
+
+GRAPH 24
+  Edge list: (0,5), (0,6), (0,11), (1,3), (1,4), (1,5), (2,4), (2,8), (2,12), (3,6), (3,13), (4,7), (5,10), (6,9), (7,11), (7,12), (8,11), (8,13), (9,10), (9,13), (10,12)
+  Decomposition rounds:
+    round  1 : cut set K = {0, 9, 3}  ->  removed |V2|=1, |K|=3
+    round  2 : cut set K = {2, 11, 13}  ->  removed |V2|=1, |K|=3
+    round  3 : cut set K = {3, 4, 5}  ->  removed |V2|=1, |K|=3
+    round  4 : cut set K = {10, 2, 7}  ->  removed |V2|=1, |K|=3
+    round  5 : cut set K = {0, 2, 13, 7}  ->  removed |V2|=1, |K|=4  (|K|>3 -> QAOA merge applied)
+    round  6 : cut set K = {3, 5, -2, -1}  ->  removed |V2|=1, |K|=4  (|K|>3 -> QAOA merge applied)
+  Reduced graph : 4 nodes, 6 edges
+  seaHat constant      : 13.0000000000
+  bestCut(reduced)     : 1.0000000000
+  Decomp MaxCut result : 14.0000000000
+  Optimal MaxCut       : 19.0000000000
+  Approximation ratio  : 0.7368421053
+  Time taken (s)       : 1.510230
+
+GRAPH 25
+  Edge list: (0,4), (0,7), (0,13), (1,10), (1,12), (1,13), (2,9), (2,10), (2,13), (3,7), (3,8), (3,12), (4,9), (4,11), (5,7), (5,9), (5,10), (6,8), (6,11), (6,12), (8,11)
+  Decomposition rounds:
+    round  1 : cut set K = {3, 11, 6}  ->  removed |V2|=1, |K|=3
+    round  2 : cut set K = {3, 4, 6}  ->  removed |V2|=1, |K|=3
+    round  3 : cut set K = {1, 3, 6}  ->  removed |V2|=1, |K|=3
+    round  4 : cut set K = {0, 1, 2}  ->  removed |V2|=1, |K|=3
+    round  5 : cut set K = {1, 2, 5}  ->  removed |V2|=1, |K|=3
+    round  6 : cut set K = {2, 4, 5}  ->  removed |V2|=1, |K|=3
+    round  7 : cut set K = {0, 3, 5}  ->  removed |V2|=1, |K|=3
+    round  8 : cut set K = {1, 3, 4}  ->  removed |V2|=1, |K|=3
+    round  9 : cut set K = {0, 1, 4, 5}  ->  removed |V2|=1, |K|=4  (|K|>3 -> QAOA merge applied)
+  Reduced graph : 2 nodes, 1 edges
+  seaHat constant      : 19.0000000000
+  bestCut(reduced)     : 0.0000000000
+  Decomp MaxCut result : 19.0000000000
+  Optimal MaxCut       : 19.0000000000
+  Approximation ratio  : 1.0000000000
+  Time taken (s)       : 0.488058
+
+GRAPH 26
+  Edge list: (0,5), (0,7), (0,12), (1,5), (1,9), (1,11), (2,3), (2,4), (2,13), (3,5), (3,9), (4,7), (4,11), (6,7), (6,8), (6,13), (8,10), (8,12), (9,11), (10,12), (10,13)
+  Decomposition rounds:
+    round  1 : cut set K = {8, 0, 10}  ->  removed |V2|=1, |K|=3
+    round  2 : cut set K = {9, 2, 5}  ->  removed |V2|=1, |K|=3
+    round  3 : cut set K = {8, 13, 7}  ->  removed |V2|=1, |K|=3
+    round  4 : cut set K = {9, 11, 5}  ->  removed |V2|=1, |K|=3
+    round  5 : cut set K = {9, 4, 5}  ->  removed |V2|=1, |K|=3
+    round  6 : cut set K = {0, 2, 7}  ->  removed |V2|=3, |K|=3
+    round  7 : cut set K = {0, 8, 13}  ->  removed |V2|=1, |K|=3
+  Reduced graph : 5 nodes, 9 edges
+  seaHat constant      : 16.0000000000
+  bestCut(reduced)     : 2.0000000000
+  Decomp MaxCut result : 18.0000000000
+  Optimal MaxCut       : 18.0000000000
+  Approximation ratio  : 1.0000000000
+  Time taken (s)       : 0.042222
+
+GRAPH 27
+  Edge list: (0,4), (0,10), (0,13), (1,5), (1,9), (1,12), (2,6), (2,8), (2,13), (3,4), (3,8), (3,13), (4,12), (5,7), (5,10), (6,7), (6,11), (7,11), (8,10), (9,11), (9,12)
+  Decomposition rounds:
+    round  1 : cut set K = {10, 2, 3}  ->  removed |V2|=1, |K|=3
+    round  2 : cut set K = {10, 4, 13}  ->  removed |V2|=1, |K|=3
+    round  3 : cut set K = {1, 11, 12}  ->  removed |V2|=1, |K|=3
+    round  4 : cut set K = {12, 5, 6}  ->  removed |V2|=3, |K|=3
+    round  5 : cut set K = {2, 12, 5}  ->  removed |V2|=1, |K|=3
+    round  6 : cut set K = {10, 2, 12}  ->  removed |V2|=1, |K|=3
+    round  7 : cut set K = {2, 10, 4}  ->  removed |V2|=1, |K|=3
+  Reduced graph : 5 nodes, 10 edges
+  seaHat constant      : 16.0000000000
+  bestCut(reduced)     : 2.0000000000
+  Decomp MaxCut result : 18.0000000000
+  Optimal MaxCut       : 18.0000000000
+  Approximation ratio  : 1.0000000000
+  Time taken (s)       : 0.042893
+
+GRAPH 28
+  Edge list: (0,2), (0,7), (0,12), (1,3), (1,5), (1,6), (2,9), (2,11), (3,8), (3,10), (4,6), (4,7), (4,12), (5,9), (5,11), (6,7), (8,10), (8,13), (9,12), (10,13), (11,13)
+  Decomposition rounds:
+    round  1 : cut set K = {11, 3}  ->  removed |V2|=3, |K|=2
+    round  2 : cut set K = {1, 11}  ->  removed |V2|=1, |K|=2
+    round  3 : cut set K = {0, 4, 6}  ->  removed |V2|=1, |K|=3
+    round  4 : cut set K = {0, 9, 4}  ->  removed |V2|=1, |K|=3
+    round  5 : cut set K = {0, 1, 4}  ->  removed |V2|=1, |K|=3
+    round  6 : cut set K = {9, 11, 1}  ->  removed |V2|=1, |K|=3
+    round  7 : cut set K = {9, 2, 1}  ->  removed |V2|=1, |K|=3
+  Reduced graph : 5 nodes, 9 edges
+  seaHat constant      : 16.0000000000
+  bestCut(reduced)     : 3.0000000000
+  Decomp MaxCut result : 19.0000000000
+  Optimal MaxCut       : 19.0000000000
+  Approximation ratio  : 1.0000000000
+  Time taken (s)       : 0.038695
+
+GRAPH 29
+  Edge list: (0,3), (0,6), (0,10), (1,2), (1,3), (1,8), (2,9), (2,12), (3,13), (4,5), (4,7), (4,11), (5,6), (5,10), (6,13), (7,9), (7,11), (8,9), (8,10), (11,12), (12,13)
+  Decomposition rounds:
+    round  1 : cut set K = {9, 12, 1}  ->  removed |V2|=1, |K|=3
+    round  2 : cut set K = {0, 5, 13}  ->  removed |V2|=1, |K|=3
+    round  3 : cut set K = {0, 1, 13}  ->  removed |V2|=1, |K|=3
+    round  4 : cut set K = {9, 10, 1}  ->  removed |V2|=1, |K|=3
+    round  5 : cut set K = {9, 11, 4}  ->  removed |V2|=1, |K|=3
+    round  6 : cut set K = {9, 12, 4}  ->  removed |V2|=1, |K|=3
+    round  7 : cut set K = {9, 12, 5}  ->  removed |V2|=1, |K|=3
+    round  8 : cut set K = {1, 10, 12, 5}  ->  removed |V2|=1, |K|=4  (|K|>3 -> QAOA merge applied)
+  Reduced graph : 4 nodes, 6 edges
+  seaHat constant      : 16.5000000000
+  bestCut(reduced)     : 2.5000000000
+  Decomp MaxCut result : 19.0000000000
+  Optimal MaxCut       : 19.0000000000
+  Approximation ratio  : 1.0000000000
+  Time taken (s)       : 0.422917
+
+======================================================================

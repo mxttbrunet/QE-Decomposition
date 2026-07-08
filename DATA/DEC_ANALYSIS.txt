@@ -1,0 +1,633 @@
+======================================================================
+DECOMPOSITION ALGORITHM ANALYSIS
+(QAOA graph-decomposition algorithm in this directory)
+======================================================================
+Generated: 2026-06-30T11:45:20
+Batch: 30 random 3-regular graphs on 14 nodes (seed = graph index)
+
+----------------------------------------------------------------------
+AGGREGATE SUMMARY
+----------------------------------------------------------------------
+Graphs run            : 30
+Approximation ratio   : mean=0.928988  min=0.792570  max=1.000000  std=0.044125
+Time per graph (s)    : mean=75.9726  min=20.4423  max=112.2511  total=2279.1794
+
+----------------------------------------------------------------------
+PER-GRAPH RESULTS
+----------------------------------------------------------------------
+graph  decomp_maxcut    optimal   approx_ratio       time_s
+    0      17.281648       18.0       0.960092      62.2871
+    1      17.986417       19.0       0.946654      97.3687
+    2      15.052097       17.0       0.885417      31.6973
+    3      15.058826       19.0       0.792570      20.4423
+    4      15.541310       18.0       0.863406      31.4509
+    5      18.000000       18.0       1.000000      74.9613
+    6      17.102504       18.0       0.950139      93.8533
+    7      18.124493       19.0       0.953921      99.0721
+    8      16.419093       18.0       0.912172      79.2901
+    9      16.281432       18.0       0.904524      40.0084
+   10      16.819004       18.0       0.934389      85.8289
+   11      16.092698       18.0       0.894039      96.1649
+   12      18.642714       19.0       0.981195      96.2006
+   13      18.114626       19.0       0.953401      90.3254
+   14      15.203165       18.0       0.844620      30.1900
+   15      16.977145       18.0       0.943175     105.1885
+   16      15.052097       17.0       0.885417      30.3744
+   17      17.472642       19.0       0.919613      80.8475
+   18      18.059209       19.0       0.950485     110.9181
+   19      18.000000       18.0       1.000000      85.9958
+   20      18.757958       19.0       0.987261     112.2511
+   21      15.610778       17.0       0.918281      46.3144
+   22      18.035408       19.0       0.949232      98.3175
+   23      16.416921       18.0       0.912051     101.1811
+   24      17.718968       19.0       0.932577      92.1768
+   25      17.598326       19.0       0.926228      96.8484
+   26      17.134271       18.0       0.951904      82.9228
+   27      16.673110       18.0       0.926284      84.5491
+   28      17.616859       19.0       0.927203      60.1101
+   29      18.304428       19.0       0.963391      62.0423
+
+======================================================================
+PER-GRAPH DETAIL (cut set for each decomposition iteration)
+======================================================================
+
+GRAPH 0
+  Edge list: (0,2), (0,5), (0,7), (1,5), (1,9), (1,13), (2,7), (2,8), (3,4), (3,6), (3,8), (4,7), (4,9), (5,11), (6,9), (6,12), (8,11), (10,11), (10,12), (10,13), (12,13)
+  Decomposition iterations:
+    iter  1 : cut set = {1, 4, 6}  ->  reduced (|cut|=3, |S1|=1, |S2|=10)
+    iter  2 : cut set = {3, 5, 11}  ->  reduced (|cut|=3, |S1|=1, |S2|=9)
+    iter  3 : cut set = {0, 2, 3}  ->  reduced (|cut|=3, |S1|=1, |S2|=8)
+    iter  4 : cut set = {3, 6, 7}  ->  reduced (|cut|=3, |S1|=1, |S2|=7)
+    iter  5 : cut set = {1, 4, 5}  ->  reduced (|cut|=3, |S1|=1, |S2|=6)
+    iter  6 : cut set = {1, 4, 7}  ->  reduced (|cut|=3, |S1|=1, |S2|=5)
+    iter  7 : cut set = {0, 4, 7}  ->  reduced (|cut|=3, |S1|=1, |S2|=4)
+    iter  8 : cut set = {5, 6}  ->  reduced (|cut|=2, |S1|=1, |S2|=4)
+    iter  9 : cut set = {1, 2, 4}  ->  reduced (|cut|=3, |S1|=1, |S2|=2)
+    iter 10 : cut set = {1, 4}  ->  reduced (|cut|=2, |S1|=1, |S2|=2)
+    iter 11 : cut set = {1, 2, 3}  ->  stop: cut does not split graph
+  Reduced graph : 4 nodes, 6 edges
+  Additive constant : 16.0000000000
+  Decomp MaxCut result : 17.2816477733
+  Optimal MaxCut       : 18.0000000000
+  Approximation ratio  : 0.9600915430
+  Time taken (s)       : 62.287095
+
+GRAPH 1
+  Edge list: (0,1), (0,7), (0,8), (1,4), (1,11), (2,5), (2,9), (2,13), (3,5), (3,6), (3,13), (4,10), (4,13), (5,8), (6,10), (6,11), (7,11), (7,12), (8,9), (9,12), (10,12)
+  Decomposition iterations:
+    iter  1 : cut set = {2, 3, 8}  ->  reduced (|cut|=3, |S1|=1, |S2|=10)
+    iter  2 : cut set = {3, 6, 10}  ->  reduced (|cut|=3, |S1|=1, |S2|=9)
+    iter  3 : cut set = {1, 6, 11}  ->  reduced (|cut|=3, |S1|=1, |S2|=8)
+    iter  4 : cut set = {2, 4, 9}  ->  reduced (|cut|=3, |S1|=1, |S2|=7)
+    iter  5 : cut set = {0, 1, 8}  ->  reduced (|cut|=3, |S1|=1, |S2|=6)
+    iter  6 : cut set = {2, 3, 6, 7}  ->  reduced (|cut|=4, |S1|=1, |S2|=4)
+    iter  7 : cut set = {0, 3, 4, 6}  ->  reduced (|cut|=4, |S1|=1, |S2|=3)
+    iter  8 : cut set = {1, 2, 6}  ->  reduced (|cut|=3, |S1|=1, |S2|=3)
+    iter  9 : cut set = {2, 3, 4}  ->  reduced (|cut|=3, |S1|=1, |S2|=2)
+    iter 10 : cut set = {1, 2, 3, 4}  ->  stop: cut does not split graph
+  Reduced graph : 5 nodes, 10 edges
+  Additive constant : 17.0000000000
+  Decomp MaxCut result : 17.9864165012
+  Optimal MaxCut       : 19.0000000000
+  Approximation ratio  : 0.9466535001
+  Time taken (s)       : 97.368678
+
+GRAPH 2
+  Edge list: (0,1), (0,6), (0,12), (1,6), (1,8), (2,8), (2,9), (2,13), (3,4), (3,5), (3,11), (4,7), (4,11), (5,7), (5,10), (6,13), (7,10), (8,10), (9,12), (9,13), (11,12)
+  Decomposition iterations:
+    iter  1 : cut set = {8, 12}  ->  reduced (|cut|=2, |S1|=6, |S2|=6)
+    iter  2 : cut set = {2, 4}  ->  reduced (|cut|=2, |S1|=1, |S2|=5)
+    iter  3 : cut set = {4, 5}  ->  reduced (|cut|=2, |S1|=1, |S2|=4)
+    iter  4 : cut set = {0, 2, 5}  ->  reduced (|cut|=3, |S1|=1, |S2|=2)
+    iter  5 : cut set = {0, 2, 4}  ->  reduced (|cut|=3, |S1|=1, |S2|=1)
+    iter  6 : cut set = {1, 2, 3}  ->  stop: cut does not split graph
+  Reduced graph : 4 nodes, 6 edges
+  Additive constant : 13.5002906999
+  Decomp MaxCut result : 15.0520965997
+  Optimal MaxCut       : 17.0000000000
+  Approximation ratio  : 0.8854174470
+  Time taken (s)       : 31.697335
+
+GRAPH 3
+  Edge list: (0,3), (0,7), (0,9), (1,2), (1,6), (1,13), (2,8), (2,13), (3,10), (3,12), (4,5), (4,9), (4,11), (5,6), (5,11), (6,8), (7,10), (7,12), (8,12), (9,10), (11,13)
+  Decomposition iterations:
+    iter  1 : cut set = {4, 8}  ->  reduced (|cut|=2, |S1|=6, |S2|=6)
+    iter  2 : cut set = {3, 6}  ->  reduced (|cut|=2, |S1|=2, |S2|=4)
+    iter  3 : cut set = {0, 5}  ->  reduced (|cut|=2, |S1|=1, |S2|=3)
+    iter  4 : cut set = {0, 4}  ->  reduced (|cut|=2, |S1|=1, |S2|=2)
+    iter  5 : cut set = {1, 2, 3}  ->  stop: cut does not split graph
+  Reduced graph : 4 nodes, 6 edges
+  Additive constant : 12.3175256633
+  Decomp MaxCut result : 15.0588259852
+  Optimal MaxCut       : 19.0000000000
+  Approximation ratio  : 0.7925697887
+  Time taken (s)       : 20.442342
+
+GRAPH 4
+  Edge list: (0,1), (0,6), (0,7), (1,6), (1,12), (2,4), (2,8), (2,12), (3,8), (3,10), (3,11), (4,9), (4,11), (5,10), (5,11), (5,13), (6,7), (7,12), (8,13), (9,10), (9,13)
+  Decomposition iterations:
+    iter  1 : cut set = {2}  ->  reduced (|cut|=1, |S1|=5, |S2|=8)
+    iter  2 : cut set = {1, 7}  ->  reduced (|cut|=2, |S1|=1, |S2|=6)
+    iter  3 : cut set = {0, 3, 5}  ->  reduced (|cut|=3, |S1|=1, |S2|=4)
+    iter  4 : cut set = {2, 3, 4}  ->  reduced (|cut|=3, |S1|=1, |S2|=3)
+    iter  5 : cut set = {0, 2, 4}  ->  reduced (|cut|=3, |S1|=1, |S2|=2)
+    iter  6 : cut set = {1, 2, 3, 4}  ->  stop: cut does not split graph
+  Reduced graph : 5 nodes, 10 edges
+  Additive constant : 16.1858013641
+  Decomp MaxCut result : 15.5413103323
+  Optimal MaxCut       : 18.0000000000
+  Approximation ratio  : 0.8634061296
+  Time taken (s)       : 31.450876
+
+GRAPH 5
+  Edge list: (0,1), (0,3), (0,5), (1,2), (1,3), (2,8), (2,11), (3,12), (4,6), (4,11), (4,13), (5,8), (5,9), (6,9), (6,13), (7,9), (7,10), (7,12), (8,10), (10,13), (11,12)
+  Decomposition iterations:
+    iter  1 : cut set = {4, 6, 10}  ->  reduced (|cut|=3, |S1|=1, |S2|=10)
+    iter  2 : cut set = {0, 7, 11}  ->  reduced (|cut|=3, |S1|=1, |S2|=9)
+    iter  3 : cut set = {3, 6, 10}  ->  reduced (|cut|=3, |S1|=1, |S2|=8)
+    iter  4 : cut set = {5, 7, 8}  ->  reduced (|cut|=3, |S1|=1, |S2|=7)
+    iter  5 : cut set = {0, 1, 7}  ->  reduced (|cut|=3, |S1|=1, |S2|=6)
+    iter  6 : cut set = {0, 2, 4}  ->  reduced (|cut|=3, |S1|=1, |S2|=5)
+    iter  7 : cut set = {1, 2, 6}  ->  reduced (|cut|=3, |S1|=1, |S2|=4)
+    iter  8 : cut set = {2, 6}  ->  reduced (|cut|=2, |S1|=1, |S2|=4)
+    iter  9 : cut set = {1, 2, 5}  ->  reduced (|cut|=3, |S1|=1, |S2|=2)
+    iter 10 : cut set = {2, 3, 4}  ->  reduced (|cut|=3, |S1|=1, |S2|=1)
+    iter 11 : cut set = {0, 3}  ->  reduced (|cut|=2, |S1|=1, |S2|=1)
+    iter 12 : cut set = {1, 2}  ->  stop: cut does not split graph
+  Reduced graph : 3 nodes, 3 edges
+  Additive constant : 18.0000000000
+  Decomp MaxCut result : 17.9999999996
+  Optimal MaxCut       : 18.0000000000
+  Approximation ratio  : 1.0000000000
+  Time taken (s)       : 74.961280
+
+GRAPH 6
+  Edge list: (0,2), (0,11), (0,12), (1,7), (1,8), (1,11), (2,3), (2,9), (3,9), (3,13), (4,6), (4,12), (4,13), (5,6), (5,8), (5,10), (6,9), (7,10), (7,13), (8,12), (10,11)
+  Decomposition iterations:
+    iter  1 : cut set = {3, 4, 7}  ->  reduced (|cut|=3, |S1|=1, |S2|=10)
+    iter  2 : cut set = {0, 3, 8}  ->  reduced (|cut|=3, |S1|=1, |S2|=9)
+    iter  3 : cut set = {2, 5, 10}  ->  reduced (|cut|=3, |S1|=1, |S2|=8)
+    iter  4 : cut set = {1, 7, 10}  ->  reduced (|cut|=3, |S1|=1, |S2|=7)
+    iter  5 : cut set = {1, 4, 8}  ->  reduced (|cut|=3, |S1|=1, |S2|=6)
+    iter  6 : cut set = {0, 5, 6, 8}  ->  reduced (|cut|=4, |S1|=1, |S2|=4)
+    iter  7 : cut set = {1, 5}  ->  reduced (|cut|=2, |S1|=1, |S2|=5)
+    iter  8 : cut set = {0, 1, 2, 5}  ->  reduced (|cut|=4, |S1|=1, |S2|=2)
+    iter  9 : cut set = {1, 3, 4}  ->  reduced (|cut|=3, |S1|=1, |S2|=2)
+    iter 10 : cut set = {1, 2, 3, 4}  ->  stop: cut does not split graph
+  Reduced graph : 5 nodes, 10 edges
+  Additive constant : 16.0000000000
+  Decomp MaxCut result : 17.1025039075
+  Optimal MaxCut       : 18.0000000000
+  Approximation ratio  : 0.9501391060
+  Time taken (s)       : 93.853286
+
+GRAPH 7
+  Edge list: (0,1), (0,5), (0,8), (1,10), (1,13), (2,3), (2,4), (2,12), (3,11), (3,13), (4,6), (4,10), (5,8), (5,11), (6,7), (6,9), (7,11), (7,12), (8,13), (9,10), (9,12)
+  Decomposition iterations:
+    iter  1 : cut set = {1, 4, 9}  ->  reduced (|cut|=3, |S1|=1, |S2|=10)
+    iter  2 : cut set = {3, 11, 12}  ->  reduced (|cut|=3, |S1|=1, |S2|=9)
+    iter  3 : cut set = {1, 4, 6}  ->  reduced (|cut|=3, |S1|=1, |S2|=8)
+    iter  4 : cut set = {7, 8, 9}  ->  reduced (|cut|=3, |S1|=1, |S2|=7)
+    iter  5 : cut set = {0, 1, 7}  ->  reduced (|cut|=3, |S1|=1, |S2|=6)
+    iter  6 : cut set = {2, 5, 7}  ->  reduced (|cut|=3, |S1|=2, |S2|=4)
+    iter  7 : cut set = {0, 3, 4, 6}  ->  reduced (|cut|=4, |S1|=1, |S2|=2)
+    iter  8 : cut set = {0, 3, 4}  ->  reduced (|cut|=3, |S1|=1, |S2|=2)
+    iter  9 : cut set = {1, 2, 4}  ->  reduced (|cut|=3, |S1|=1, |S2|=1)
+    iter 10 : cut set = {1, 2, 3}  ->  stop: cut does not split graph
+  Reduced graph : 4 nodes, 6 edges
+  Additive constant : 18.8151339012
+  Decomp MaxCut result : 18.1244934394
+  Optimal MaxCut       : 19.0000000000
+  Approximation ratio  : 0.9539207073
+  Time taken (s)       : 99.072076
+
+GRAPH 8
+  Edge list: (0,6), (0,7), (0,9), (1,3), (1,4), (1,7), (2,5), (2,12), (2,13), (3,7), (3,11), (4,10), (4,12), (5,10), (5,13), (6,8), (6,11), (8,10), (8,12), (9,11), (9,13)
+  Decomposition iterations:
+    iter  1 : cut set = {3, 6, 9}  ->  reduced (|cut|=3, |S1|=1, |S2|=10)
+    iter  2 : cut set = {0, 3, 4}  ->  reduced (|cut|=3, |S1|=1, |S2|=9)
+    iter  3 : cut set = {1, 3, 4}  ->  reduced (|cut|=3, |S1|=1, |S2|=8)
+    iter  4 : cut set = {5, 6, 7}  ->  reduced (|cut|=3, |S1|=1, |S2|=7)
+    iter  5 : cut set = {1, 7, 9}  ->  reduced (|cut|=3, |S1|=1, |S2|=6)
+    iter  6 : cut set = {1, 4, 6}  ->  reduced (|cut|=3, |S1|=3, |S2|=3)
+    iter  7 : cut set = {0, 2, 4}  ->  reduced (|cut|=3, |S1|=1, |S2|=2)
+    iter  8 : cut set = {1, 2, 3, 4}  ->  stop: cut does not split graph
+  Reduced graph : 5 nodes, 10 edges
+  Additive constant : 17.2376666832
+  Decomp MaxCut result : 16.4190927012
+  Optimal MaxCut       : 18.0000000000
+  Approximation ratio  : 0.9121718167
+  Time taken (s)       : 79.290142
+
+GRAPH 9
+  Edge list: (0,6), (0,9), (0,12), (1,3), (1,9), (1,13), (2,7), (2,8), (2,10), (3,5), (3,13), (4,6), (4,8), (4,9), (5,12), (5,13), (6,8), (7,10), (7,11), (10,11), (11,12)
+  Decomposition iterations:
+    iter  1 : cut set = {1, 5}  ->  reduced (|cut|=2, |S1|=2, |S2|=10)
+    iter  2 : cut set = {0, 9}  ->  reduced (|cut|=2, |S1|=1, |S2|=9)
+    iter  3 : cut set = {1, 3}  ->  reduced (|cut|=2, |S1|=1, |S2|=8)
+    iter  4 : cut set = {0, 4}  ->  reduced (|cut|=2, |S1|=3, |S2|=5)
+    iter  5 : cut set = {0, 5}  ->  reduced (|cut|=2, |S1|=1, |S2|=4)
+    iter  6 : cut set = {0, 2, 4}  ->  reduced (|cut|=3, |S1|=1, |S2|=2)
+    iter  7 : cut set = {0, 2, 4}  ->  reduced (|cut|=3, |S1|=1, |S2|=1)
+    iter  8 : cut set = {1, 2, 3}  ->  stop: cut does not split graph
+  Reduced graph : 4 nodes, 6 edges
+  Additive constant : 13.5459894648
+  Decomp MaxCut result : 16.2814315099
+  Optimal MaxCut       : 18.0000000000
+  Approximation ratio  : 0.9045239728
+  Time taken (s)       : 40.008427
+
+GRAPH 10
+  Edge list: (0,4), (0,8), (0,12), (1,3), (1,5), (1,10), (2,6), (2,8), (2,9), (3,6), (3,7), (4,7), (4,12), (5,9), (5,10), (6,8), (7,13), (9,11), (10,11), (11,13), (12,13)
+  Decomposition iterations:
+    iter  1 : cut set = {2, 3, 8}  ->  reduced (|cut|=3, |S1|=1, |S2|=10)
+    iter  2 : cut set = {0, 7, 10}  ->  reduced (|cut|=3, |S1|=1, |S2|=9)
+    iter  3 : cut set = {4, 6, 8}  ->  reduced (|cut|=3, |S1|=1, |S2|=8)
+    iter  4 : cut set = {1, 5, 7}  ->  reduced (|cut|=3, |S1|=1, |S2|=7)
+    iter  5 : cut set = {6, 7, 8}  ->  reduced (|cut|=3, |S1|=1, |S2|=6)
+    iter  6 : cut set = {0, 1, 4}  ->  reduced (|cut|=3, |S1|=1, |S2|=5)
+    iter  7 : cut set = {3, 4, 5}  ->  reduced (|cut|=3, |S1|=1, |S2|=4)
+    iter  8 : cut set = {2, 4, 5}  ->  reduced (|cut|=3, |S1|=2, |S2|=2)
+    iter  9 : cut set = {1, 2, 4}  ->  reduced (|cut|=3, |S1|=1, |S2|=1)
+    iter 10 : cut set = {1, 2, 3}  ->  stop: cut does not split graph
+  Reduced graph : 4 nodes, 6 edges
+  Additive constant : 17.0000000000
+  Decomp MaxCut result : 16.8190035525
+  Optimal MaxCut       : 18.0000000000
+  Approximation ratio  : 0.9343890863
+  Time taken (s)       : 85.828859
+
+GRAPH 11
+  Edge list: (0,2), (0,6), (0,7), (1,6), (1,8), (1,13), (2,3), (2,12), (3,7), (3,10), (4,6), (4,9), (4,12), (5,8), (5,10), (5,11), (7,13), (8,11), (9,10), (9,11), (12,13)
+  Decomposition iterations:
+    iter  1 : cut set = {2, 4, 13}  ->  reduced (|cut|=3, |S1|=1, |S2|=10)
+    iter  2 : cut set = {3, 4, 9}  ->  reduced (|cut|=3, |S1|=1, |S2|=9)
+    iter  3 : cut set = {3, 6, 7}  ->  reduced (|cut|=3, |S1|=1, |S2|=8)
+    iter  4 : cut set = {5, 8, 9}  ->  reduced (|cut|=3, |S1|=1, |S2|=7)
+    iter  5 : cut set = {2, 7, 8}  ->  reduced (|cut|=3, |S1|=3, |S2|=4)
+    iter  6 : cut set = {0, 2, 3, 4}  ->  reduced (|cut|=4, |S1|=1, |S2|=1)
+    iter  7 : cut set = {1, 3, 4}  ->  reduced (|cut|=3, |S1|=1, |S2|=1)
+    iter  8 : cut set = {1, 2, 3}  ->  stop: cut does not split graph
+  Reduced graph : 4 nodes, 6 edges
+  Additive constant : 16.0024778426
+  Decomp MaxCut result : 16.0926980298
+  Optimal MaxCut       : 18.0000000000
+  Approximation ratio  : 0.8940387794
+  Time taken (s)       : 96.164936
+
+GRAPH 12
+  Edge list: (0,4), (0,9), (0,11), (1,6), (1,8), (1,10), (2,3), (2,7), (2,12), (3,7), (3,11), (4,7), (4,8), (5,8), (5,10), (5,13), (6,11), (6,12), (9,10), (9,13), (12,13)
+  Decomposition iterations:
+    iter  1 : cut set = {0, 3, 6}  ->  reduced (|cut|=3, |S1|=1, |S2|=10)
+    iter  2 : cut set = {1, 3, 4}  ->  reduced (|cut|=3, |S1|=1, |S2|=9)
+    iter  3 : cut set = {2, 3, 10}  ->  reduced (|cut|=3, |S1|=1, |S2|=8)
+    iter  4 : cut set = {1, 6, 8}  ->  reduced (|cut|=3, |S1|=1, |S2|=7)
+    iter  5 : cut set = {2, 4, 7}  ->  reduced (|cut|=3, |S1|=1, |S2|=6)
+    iter  6 : cut set = {0, 1, 4}  ->  reduced (|cut|=3, |S1|=1, |S2|=5)
+    iter  7 : cut set = {0, 1, 4, 7}  ->  reduced (|cut|=4, |S1|=1, |S2|=3)
+    iter  8 : cut set = {0, 4, 5, 6}  ->  reduced (|cut|=4, |S1|=1, |S2|=2)
+    iter  9 : cut set = {2, 5}  ->  reduced (|cut|=2, |S1|=1, |S2|=3)
+    iter 10 : cut set = {3, 4}  ->  reduced (|cut|=2, |S1|=1, |S2|=2)
+    iter 11 : cut set = {2, 3}  ->  reduced (|cut|=2, |S1|=1, |S2|=1)
+    iter 12 : cut set = {1, 2}  ->  stop: cut does not split graph
+  Reduced graph : 3 nodes, 3 edges
+  Additive constant : 19.0000000000
+  Decomp MaxCut result : 18.6427135259
+  Optimal MaxCut       : 19.0000000000
+  Approximation ratio  : 0.9811954487
+  Time taken (s)       : 96.200579
+
+GRAPH 13
+  Edge list: (0,1), (0,7), (0,13), (1,3), (1,10), (2,5), (2,10), (2,12), (3,9), (3,10), (4,5), (4,11), (4,12), (5,8), (6,7), (6,11), (6,13), (7,12), (8,9), (8,11), (9,13)
+  Decomposition iterations:
+    iter  1 : cut set = {4, 6, 8}  ->  reduced (|cut|=3, |S1|=1, |S2|=10)
+    iter  2 : cut set = {3, 5, 8}  ->  reduced (|cut|=3, |S1|=1, |S2|=9)
+    iter  3 : cut set = {5, 6, 11}  ->  reduced (|cut|=3, |S1|=1, |S2|=8)
+    iter  4 : cut set = {2, 8, 10}  ->  reduced (|cut|=3, |S1|=1, |S2|=7)
+    iter  5 : cut set = {1, 4, 5, 7}  ->  reduced (|cut|=4, |S1|=1, |S2|=5)
+    iter  6 : cut set = {4, 5}  ->  reduced (|cut|=2, |S1|=1, |S2|=6)
+    iter  7 : cut set = {0, 3, 7}  ->  reduced (|cut|=3, |S1|=1, |S2|=4)
+    iter  8 : cut set = {0, 1, 4, 5}  ->  reduced (|cut|=4, |S1|=1, |S2|=2)
+    iter  9 : cut set = {1, 3, 4}  ->  reduced (|cut|=3, |S1|=1, |S2|=2)
+    iter 10 : cut set = {0, 1, 4}  ->  reduced (|cut|=3, |S1|=1, |S2|=1)
+    iter 11 : cut set = {1, 2, 3}  ->  stop: cut does not split graph
+  Reduced graph : 4 nodes, 6 edges
+  Additive constant : 15.0000000000
+  Decomp MaxCut result : 18.1146255723
+  Optimal MaxCut       : 19.0000000000
+  Approximation ratio  : 0.9534013459
+  Time taken (s)       : 90.325406
+
+GRAPH 14
+  Edge list: (0,1), (0,4), (0,5), (1,2), (1,5), (2,6), (2,11), (3,4), (3,12), (3,13), (4,5), (6,9), (6,13), (7,8), (7,9), (7,10), (8,10), (8,11), (9,11), (10,12), (12,13)
+  Decomposition iterations:
+    iter  1 : cut set = {2, 3}  ->  reduced (|cut|=2, |S1|=4, |S2|=8)
+    iter  2 : cut set = {5, 9}  ->  reduced (|cut|=2, |S1|=1, |S2|=7)
+    iter  3 : cut set = {1, 6}  ->  reduced (|cut|=2, |S1|=3, |S2|=4)
+    iter  4 : cut set = {0, 2, 4}  ->  reduced (|cut|=3, |S1|=1, |S2|=2)
+    iter  5 : cut set = {0, 2, 4}  ->  reduced (|cut|=3, |S1|=1, |S2|=1)
+    iter  6 : cut set = {1, 2, 3}  ->  stop: cut does not split graph
+  Reduced graph : 4 nodes, 6 edges
+  Additive constant : 12.5941753458
+  Decomp MaxCut result : 15.2031651935
+  Optimal MaxCut       : 18.0000000000
+  Approximation ratio  : 0.8446202885
+  Time taken (s)       : 30.189972
+
+GRAPH 15
+  Edge list: (0,3), (0,9), (0,13), (1,3), (1,4), (1,7), (2,7), (2,9), (2,11), (3,13), (4,5), (4,12), (5,12), (5,13), (6,8), (6,10), (6,11), (7,10), (8,11), (8,12), (9,10)
+  Decomposition iterations:
+    iter  1 : cut set = {3, 4, 7}  ->  reduced (|cut|=3, |S1|=1, |S2|=10)
+    iter  2 : cut set = {1, 3, 5}  ->  reduced (|cut|=3, |S1|=1, |S2|=9)
+    iter  3 : cut set = {1, 7, 8}  ->  reduced (|cut|=3, |S1|=1, |S2|=8)
+    iter  4 : cut set = {1, 6, 9}  ->  reduced (|cut|=3, |S1|=1, |S2|=7)
+    iter  5 : cut set = {1, 2, 4}  ->  reduced (|cut|=3, |S1|=1, |S2|=6)
+    iter  6 : cut set = {0, 4, 8}  ->  reduced (|cut|=3, |S1|=3, |S2|=3)
+    iter  7 : cut set = {0, 1, 4, 5}  ->  reduced (|cut|=4, |S1|=1, |S2|=1)
+    iter  8 : cut set = {0, 2, 4}  ->  reduced (|cut|=3, |S1|=1, |S2|=1)
+    iter  9 : cut set = {1, 2, 3}  ->  stop: cut does not split graph
+  Reduced graph : 4 nodes, 6 edges
+  Additive constant : 17.4010010113
+  Decomp MaxCut result : 16.9771453770
+  Optimal MaxCut       : 18.0000000000
+  Approximation ratio  : 0.9431747432
+  Time taken (s)       : 105.188536
+
+GRAPH 16
+  Edge list: (0,5), (0,9), (0,11), (1,7), (1,10), (1,11), (2,4), (2,11), (2,13), (3,8), (3,10), (3,13), (4,7), (4,13), (5,6), (5,9), (6,8), (6,12), (7,10), (8,12), (9,12)
+  Decomposition iterations:
+    iter  1 : cut set = {3, 11}  ->  reduced (|cut|=2, |S1|=6, |S2|=6)
+    iter  2 : cut set = {2, 3}  ->  reduced (|cut|=2, |S1|=1, |S2|=5)
+    iter  3 : cut set = {3, 6}  ->  reduced (|cut|=2, |S1|=1, |S2|=4)
+    iter  4 : cut set = {0, 3, 4}  ->  reduced (|cut|=3, |S1|=1, |S2|=2)
+    iter  5 : cut set = {0, 2, 4}  ->  reduced (|cut|=3, |S1|=1, |S2|=1)
+    iter  6 : cut set = {1, 2, 3}  ->  stop: cut does not split graph
+  Reduced graph : 4 nodes, 6 edges
+  Additive constant : 13.5002906999
+  Decomp MaxCut result : 15.0520965997
+  Optimal MaxCut       : 17.0000000000
+  Approximation ratio  : 0.8854174470
+  Time taken (s)       : 30.374396
+
+GRAPH 17
+  Edge list: (0,3), (0,4), (0,10), (1,5), (1,7), (1,8), (2,3), (2,4), (2,6), (3,6), (4,9), (5,12), (5,13), (6,11), (7,11), (7,12), (8,10), (8,11), (9,10), (9,13), (12,13)
+  Decomposition iterations:
+    iter  1 : cut set = {3, 4, 10}  ->  reduced (|cut|=3, |S1|=1, |S2|=10)
+    iter  2 : cut set = {3, 4, 6}  ->  reduced (|cut|=3, |S1|=1, |S2|=9)
+    iter  3 : cut set = {1, 7, 10}  ->  reduced (|cut|=3, |S1|=1, |S2|=8)
+    iter  4 : cut set = {5, 6, 8}  ->  reduced (|cut|=3, |S1|=1, |S2|=7)
+    iter  5 : cut set = {0, 1, 4}  ->  reduced (|cut|=3, |S1|=1, |S2|=6)
+    iter  6 : cut set = {2, 4, 7}  ->  reduced (|cut|=3, |S1|=1, |S2|=5)
+    iter  7 : cut set = {1, 5, 6}  ->  reduced (|cut|=3, |S1|=1, |S2|=4)
+    iter  8 : cut set = {2, 3, 4}  ->  reduced (|cut|=3, |S1|=2, |S2|=2)
+    iter  9 : cut set = {1, 2, 4}  ->  reduced (|cut|=3, |S1|=1, |S2|=1)
+    iter 10 : cut set = {1, 2, 3}  ->  stop: cut does not split graph
+  Reduced graph : 4 nodes, 6 edges
+  Additive constant : 18.3474865856
+  Decomp MaxCut result : 17.4726423012
+  Optimal MaxCut       : 19.0000000000
+  Approximation ratio  : 0.9196127527
+  Time taken (s)       : 80.847543
+
+GRAPH 18
+  Edge list: (0,3), (0,10), (0,12), (1,4), (1,6), (1,12), (2,3), (2,6), (2,7), (3,11), (4,5), (4,7), (5,8), (5,10), (6,13), (7,11), (8,11), (8,13), (9,10), (9,12), (9,13)
+  Decomposition iterations:
+    iter  1 : cut set = {5, 11, 13}  ->  reduced (|cut|=3, |S1|=1, |S2|=10)
+    iter  2 : cut set = {3, 6, 12}  ->  reduced (|cut|=3, |S1|=1, |S2|=9)
+    iter  3 : cut set = {3, 6, 11}  ->  reduced (|cut|=3, |S1|=1, |S2|=8)
+    iter  4 : cut set = {2, 5, 8}  ->  reduced (|cut|=3, |S1|=1, |S2|=7)
+    iter  5 : cut set = {5, 6, 8}  ->  reduced (|cut|=3, |S1|=1, |S2|=6)
+    iter  6 : cut set = {0, 2, 4, 7}  ->  reduced (|cut|=4, |S1|=1, |S2|=4)
+    iter  7 : cut set = {0, 4, 5, 7}  ->  reduced (|cut|=4, |S1|=1, |S2|=3)
+    iter  8 : cut set = {0, 1, 2, 6}  ->  reduced (|cut|=4, |S1|=1, |S2|=2)
+    iter  9 : cut set = {0, 3, 4}  ->  reduced (|cut|=3, |S1|=1, |S2|=2)
+    iter 10 : cut set = {0, 4}  ->  reduced (|cut|=2, |S1|=1, |S2|=2)
+    iter 11 : cut set = {1, 2, 3}  ->  stop: cut does not split graph
+  Reduced graph : 4 nodes, 6 edges
+  Additive constant : 17.0000000000
+  Decomp MaxCut result : 18.0592088804
+  Optimal MaxCut       : 19.0000000000
+  Approximation ratio  : 0.9504846779
+  Time taken (s)       : 110.918058
+
+GRAPH 19
+  Edge list: (0,3), (0,6), (0,7), (1,4), (1,10), (1,11), (2,3), (2,5), (2,10), (3,11), (4,7), (4,9), (5,6), (5,7), (6,13), (8,9), (8,12), (8,13), (9,12), (10,13), (11,12)
+  Decomposition iterations:
+    iter  1 : cut set = {4, 10, 11}  ->  reduced (|cut|=3, |S1|=1, |S2|=10)
+    iter  2 : cut set = {2, 3, 6}  ->  reduced (|cut|=3, |S1|=1, |S2|=9)
+    iter  3 : cut set = {0, 1, 10}  ->  reduced (|cut|=3, |S1|=1, |S2|=8)
+    iter  4 : cut set = {0, 7, 9}  ->  reduced (|cut|=3, |S1|=1, |S2|=7)
+    iter  5 : cut set = {2, 4, 7}  ->  reduced (|cut|=3, |S1|=1, |S2|=6)
+    iter  6 : cut set = {0, 2, 6}  ->  reduced (|cut|=3, |S1|=1, |S2|=5)
+    iter  7 : cut set = {2, 3, 4}  ->  reduced (|cut|=3, |S1|=1, |S2|=4)
+    iter  8 : cut set = {0, 1, 2, 5}  ->  reduced (|cut|=4, |S1|=1, |S2|=2)
+    iter  9 : cut set = {0, 1, 4}  ->  reduced (|cut|=3, |S1|=1, |S2|=2)
+    iter 10 : cut set = {0, 3, 4}  ->  reduced (|cut|=3, |S1|=1, |S2|=1)
+    iter 11 : cut set = {1, 3}  ->  reduced (|cut|=2, |S1|=1, |S2|=1)
+    iter 12 : cut set = {2}  ->  reduced (|cut|=1, |S1|=1, |S2|=1)
+    iter 13 : cut set = {1}  ->  stop: cut does not split graph
+  Reduced graph : 2 nodes, 1 edges
+  Additive constant : 18.0000000000
+  Decomp MaxCut result : 18.0000000000
+  Optimal MaxCut       : 18.0000000000
+  Approximation ratio  : 1.0000000000
+  Time taken (s)       : 85.995846
+
+GRAPH 20
+  Edge list: (0,4), (0,5), (0,9), (1,9), (1,10), (1,12), (2,5), (2,9), (2,12), (3,7), (3,10), (3,13), (4,6), (4,11), (5,8), (6,7), (6,8), (7,11), (8,10), (11,13), (12,13)
+  Decomposition iterations:
+    iter  1 : cut set = {3, 11, 12}  ->  reduced (|cut|=3, |S1|=1, |S2|=10)
+    iter  2 : cut set = {3, 4, 12}  ->  reduced (|cut|=3, |S1|=1, |S2|=9)
+    iter  3 : cut set = {5, 6, 11}  ->  reduced (|cut|=3, |S1|=1, |S2|=8)
+    iter  4 : cut set = {5, 8, 10}  ->  reduced (|cut|=3, |S1|=1, |S2|=7)
+    iter  5 : cut set = {0, 1, 6, 9}  ->  reduced (|cut|=4, |S1|=1, |S2|=5)
+    iter  6 : cut set = {0, 5, 7, 8}  ->  reduced (|cut|=4, |S1|=1, |S2|=4)
+    iter  7 : cut set = {2, 6, 7}  ->  reduced (|cut|=3, |S1|=1, |S2|=4)
+    iter  8 : cut set = {2, 4, 5}  ->  reduced (|cut|=3, |S1|=1, |S2|=3)
+    iter  9 : cut set = {0, 1, 2, 5}  ->  reduced (|cut|=4, |S1|=1, |S2|=1)
+    iter 10 : cut set = {0, 3, 4}  ->  reduced (|cut|=3, |S1|=1, |S2|=1)
+    iter 11 : cut set = {3}  ->  reduced (|cut|=1, |S1|=1, |S2|=2)
+    iter 12 : cut set = {1, 2}  ->  stop: cut does not split graph
+  Reduced graph : 3 nodes, 3 edges
+  Additive constant : 19.0000000000
+  Decomp MaxCut result : 18.7579575729
+  Optimal MaxCut       : 19.0000000000
+  Approximation ratio  : 0.9872609249
+  Time taken (s)       : 112.251095
+
+GRAPH 21
+  Edge list: (0,1), (0,5), (0,6), (1,8), (1,11), (2,3), (2,8), (2,13), (3,6), (3,11), (4,7), (4,9), (4,12), (5,7), (5,10), (6,11), (7,13), (8,13), (9,10), (9,12), (10,12)
+  Decomposition iterations:
+    iter  1 : cut set = {4, 5}  ->  reduced (|cut|=2, |S1|=3, |S2|=9)
+    iter  2 : cut set = {3, 8}  ->  reduced (|cut|=2, |S1|=3, |S2|=6)
+    iter  3 : cut set = {0, 5, 6}  ->  reduced (|cut|=3, |S1|=1, |S2|=4)
+    iter  4 : cut set = {0, 1, 5}  ->  reduced (|cut|=3, |S1|=1, |S2|=3)
+    iter  5 : cut set = {0, 1, 5}  ->  reduced (|cut|=3, |S1|=1, |S2|=2)
+    iter  6 : cut set = {0, 2, 3}  ->  reduced (|cut|=3, |S1|=1, |S2|=1)
+    iter  7 : cut set = {2, 3}  ->  reduced (|cut|=2, |S1|=1, |S2|=1)
+    iter  8 : cut set = {1, 2}  ->  stop: cut does not split graph
+  Reduced graph : 3 nodes, 3 edges
+  Additive constant : 13.4461341889
+  Decomp MaxCut result : 15.6107780481
+  Optimal MaxCut       : 17.0000000000
+  Approximation ratio  : 0.9182810617
+  Time taken (s)       : 46.314390
+
+GRAPH 22
+  Edge list: (0,1), (0,3), (0,4), (1,8), (1,13), (2,6), (2,11), (2,12), (3,10), (3,12), (4,7), (4,10), (5,6), (5,7), (5,8), (6,9), (7,11), (8,11), (9,10), (9,13), (12,13)
+  Decomposition iterations:
+    iter  1 : cut set = {6, 11, 12}  ->  reduced (|cut|=3, |S1|=1, |S2|=10)
+    iter  2 : cut set = {3, 8, 10}  ->  reduced (|cut|=3, |S1|=1, |S2|=9)
+    iter  3 : cut set = {6, 10, 11}  ->  reduced (|cut|=3, |S1|=1, |S2|=8)
+    iter  4 : cut set = {2, 7, 9}  ->  reduced (|cut|=3, |S1|=1, |S2|=7)
+    iter  5 : cut set = {1, 2, 4, 9}  ->  reduced (|cut|=4, |S1|=1, |S2|=5)
+    iter  6 : cut set = {0, 1, 6, 8}  ->  reduced (|cut|=4, |S1|=1, |S2|=4)
+    iter  7 : cut set = {1, 5, 6}  ->  reduced (|cut|=3, |S1|=1, |S2|=4)
+    iter  8 : cut set = {1, 2, 4, 5}  ->  reduced (|cut|=4, |S1|=1, |S2|=2)
+    iter  9 : cut set = {2, 3, 4}  ->  reduced (|cut|=3, |S1|=1, |S2|=2)
+    iter 10 : cut set = {1, 2, 3, 4}  ->  stop: cut does not split graph
+  Reduced graph : 5 nodes, 10 edges
+  Additive constant : 15.0000000000
+  Decomp MaxCut result : 18.0354083442
+  Optimal MaxCut       : 19.0000000000
+  Approximation ratio  : 0.9492320181
+  Time taken (s)       : 98.317495
+
+GRAPH 23
+  Edge list: (0,1), (0,8), (0,11), (1,9), (1,13), (2,3), (2,7), (2,8), (3,7), (3,12), (4,5), (4,10), (4,12), (5,10), (5,13), (6,8), (6,11), (6,13), (7,10), (9,11), (9,12)
+  Decomposition iterations:
+    iter  1 : cut set = {3, 7, 8}  ->  reduced (|cut|=3, |S1|=1, |S2|=10)
+    iter  2 : cut set = {0, 3, 8}  ->  reduced (|cut|=3, |S1|=1, |S2|=9)
+    iter  3 : cut set = {1, 3, 5}  ->  reduced (|cut|=3, |S1|=1, |S2|=8)
+    iter  4 : cut set = {2, 9, 10}  ->  reduced (|cut|=3, |S1|=1, |S2|=7)
+    iter  5 : cut set = {1, 7, 8}  ->  reduced (|cut|=3, |S1|=1, |S2|=6)
+    iter  6 : cut set = {1, 3, 8}  ->  reduced (|cut|=3, |S1|=3, |S2|=3)
+    iter  7 : cut set = {0, 1, 3, 5}  ->  reduced (|cut|=4, |S1|=1, |S2|=1)
+    iter  8 : cut set = {1, 2, 3, 4}  ->  stop: cut does not split graph
+  Reduced graph : 5 nodes, 10 edges
+  Additive constant : 16.1632849101
+  Decomp MaxCut result : 16.4169210247
+  Optimal MaxCut       : 18.0000000000
+  Approximation ratio  : 0.9120511680
+  Time taken (s)       : 101.181123
+
+GRAPH 24
+  Edge list: (0,5), (0,6), (0,11), (1,3), (1,4), (1,5), (2,4), (2,8), (2,12), (3,6), (3,13), (4,7), (5,10), (6,9), (7,11), (7,12), (8,11), (8,13), (9,10), (9,13), (10,12)
+  Decomposition iterations:
+    iter  1 : cut set = {0, 3, 9}  ->  reduced (|cut|=3, |S1|=1, |S2|=10)
+    iter  2 : cut set = {3, 8, 9}  ->  reduced (|cut|=3, |S1|=1, |S2|=9)
+    iter  3 : cut set = {4, 6, 10}  ->  reduced (|cut|=3, |S1|=1, |S2|=8)
+    iter  4 : cut set = {5, 8, 10}  ->  reduced (|cut|=3, |S1|=1, |S2|=7)
+    iter  5 : cut set = {1, 3, 6, 8}  ->  reduced (|cut|=4, |S1|=1, |S2|=5)
+    iter  6 : cut set = {0, 1, 3, 7}  ->  reduced (|cut|=4, |S1|=1, |S2|=4)
+    iter  7 : cut set = {3, 4}  ->  reduced (|cut|=2, |S1|=1, |S2|=5)
+    iter  8 : cut set = {0, 2, 4, 6}  ->  reduced (|cut|=4, |S1|=1, |S2|=2)
+    iter  9 : cut set = {0, 1, 4}  ->  reduced (|cut|=3, |S1|=1, |S2|=2)
+    iter 10 : cut set = {1, 2, 3, 4}  ->  stop: cut does not split graph
+  Reduced graph : 5 nodes, 10 edges
+  Additive constant : 16.0000000000
+  Decomp MaxCut result : 17.7189680575
+  Optimal MaxCut       : 19.0000000000
+  Approximation ratio  : 0.9325772662
+  Time taken (s)       : 92.176846
+
+GRAPH 25
+  Edge list: (0,4), (0,7), (0,13), (1,10), (1,12), (1,13), (2,9), (2,10), (2,13), (3,7), (3,8), (3,12), (4,9), (4,11), (5,7), (5,9), (5,10), (6,8), (6,11), (6,12), (8,11)
+  Decomposition iterations:
+    iter  1 : cut set = {3, 6, 11}  ->  reduced (|cut|=3, |S1|=1, |S2|=10)
+    iter  2 : cut set = {0, 1, 9}  ->  reduced (|cut|=3, |S1|=1, |S2|=9)
+    iter  3 : cut set = {0, 1, 4}  ->  reduced (|cut|=3, |S1|=1, |S2|=8)
+    iter  4 : cut set = {4, 7, 9}  ->  reduced (|cut|=3, |S1|=1, |S2|=7)
+    iter  5 : cut set = {2, 5, 7}  ->  reduced (|cut|=3, |S1|=1, |S2|=6)
+    iter  6 : cut set = {2, 3, 4}  ->  reduced (|cut|=3, |S1|=1, |S2|=5)
+    iter  7 : cut set = {0, 4, 7}  ->  reduced (|cut|=3, |S1|=2, |S2|=3)
+    iter  8 : cut set = {0, 1, 4, 5}  ->  reduced (|cut|=4, |S1|=1, |S2|=1)
+    iter  9 : cut set = {1, 2, 3, 4}  ->  stop: cut does not split graph
+  Reduced graph : 5 nodes, 10 edges
+  Additive constant : 18.3474865856
+  Decomp MaxCut result : 17.5983260703
+  Optimal MaxCut       : 19.0000000000
+  Approximation ratio  : 0.9262276879
+  Time taken (s)       : 96.848448
+
+GRAPH 26
+  Edge list: (0,5), (0,7), (0,12), (1,5), (1,9), (1,11), (2,3), (2,4), (2,13), (3,5), (3,9), (4,7), (4,11), (6,7), (6,8), (6,13), (8,10), (8,12), (9,11), (10,12), (10,13)
+  Decomposition iterations:
+    iter  1 : cut set = {0, 8, 10}  ->  reduced (|cut|=3, |S1|=1, |S2|=10)
+    iter  2 : cut set = {1, 10, 12}  ->  reduced (|cut|=3, |S1|=1, |S2|=9)
+    iter  3 : cut set = {2, 9, 10}  ->  reduced (|cut|=3, |S1|=1, |S2|=8)
+    iter  4 : cut set = {7, 8, 9}  ->  reduced (|cut|=3, |S1|=1, |S2|=7)
+    iter  5 : cut set = {0, 1, 5}  ->  reduced (|cut|=3, |S1|=1, |S2|=6)
+    iter  6 : cut set = {3, 5, 7}  ->  reduced (|cut|=3, |S1|=1, |S2|=5)
+    iter  7 : cut set = {0, 3, 5}  ->  reduced (|cut|=3, |S1|=2, |S2|=3)
+    iter  8 : cut set = {0, 1, 5}  ->  reduced (|cut|=3, |S1|=1, |S2|=2)
+    iter  9 : cut set = {0, 2, 4}  ->  reduced (|cut|=3, |S1|=1, |S2|=1)
+    iter 10 : cut set = {1, 2, 3}  ->  stop: cut does not split graph
+  Reduced graph : 4 nodes, 6 edges
+  Additive constant : 16.3888888889
+  Decomp MaxCut result : 17.1342706275
+  Optimal MaxCut       : 18.0000000000
+  Approximation ratio  : 0.9519039238
+  Time taken (s)       : 82.922812
+
+GRAPH 27
+  Edge list: (0,4), (0,10), (0,13), (1,5), (1,9), (1,12), (2,6), (2,8), (2,13), (3,4), (3,8), (3,13), (4,12), (5,7), (5,10), (6,7), (6,11), (7,11), (8,10), (9,11), (9,12)
+  Decomposition iterations:
+    iter  1 : cut set = {2, 3, 10}  ->  reduced (|cut|=3, |S1|=1, |S2|=10)
+    iter  2 : cut set = {2, 3, 7}  ->  reduced (|cut|=3, |S1|=1, |S2|=9)
+    iter  3 : cut set = {5, 9, 10}  ->  reduced (|cut|=3, |S1|=1, |S2|=8)
+    iter  4 : cut set = {0, 3, 6}  ->  reduced (|cut|=3, |S1|=3, |S2|=5)
+    iter  5 : cut set = {1, 4, 6}  ->  reduced (|cut|=3, |S1|=1, |S2|=4)
+    iter  6 : cut set = {2, 4, 5}  ->  reduced (|cut|=3, |S1|=1, |S2|=3)
+    iter  7 : cut set = {0, 1, 4, 5}  ->  reduced (|cut|=4, |S1|=1, |S2|=1)
+    iter  8 : cut set = {0, 4}  ->  reduced (|cut|=2, |S1|=1, |S2|=2)
+    iter  9 : cut set = {1, 2, 3}  ->  stop: cut does not split graph
+  Reduced graph : 4 nodes, 6 edges
+  Additive constant : 16.8460614599
+  Decomp MaxCut result : 16.6731104520
+  Optimal MaxCut       : 18.0000000000
+  Approximation ratio  : 0.9262839140
+  Time taken (s)       : 84.549106
+
+GRAPH 28
+  Edge list: (0,2), (0,7), (0,12), (1,3), (1,5), (1,6), (2,9), (2,11), (3,8), (3,10), (4,6), (4,7), (4,12), (5,9), (5,11), (6,7), (8,10), (8,13), (9,12), (10,13), (11,13)
+  Decomposition iterations:
+    iter  1 : cut set = {3, 11}  ->  reduced (|cut|=2, |S1|=3, |S2|=9)
+    iter  2 : cut set = {1, 7}  ->  reduced (|cut|=2, |S1|=1, |S2|=8)
+    iter  3 : cut set = {0, 1, 8}  ->  reduced (|cut|=3, |S1|=1, |S2|=6)
+    iter  4 : cut set = {0, 2, 6}  ->  reduced (|cut|=3, |S1|=1, |S2|=5)
+    iter  5 : cut set = {0, 1, 5}  ->  reduced (|cut|=3, |S1|=1, |S2|=4)
+    iter  6 : cut set = {2, 3, 4}  ->  reduced (|cut|=3, |S1|=1, |S2|=3)
+    iter  7 : cut set = {1, 2, 4}  ->  reduced (|cut|=3, |S1|=1, |S2|=2)
+    iter  8 : cut set = {0, 2, 3}  ->  reduced (|cut|=3, |S1|=1, |S2|=1)
+    iter  9 : cut set = {1, 3}  ->  reduced (|cut|=2, |S1|=1, |S2|=1)
+    iter 10 : cut set = {1, 2}  ->  stop: cut does not split graph
+  Reduced graph : 3 nodes, 3 edges
+  Additive constant : 16.8839625191
+  Decomp MaxCut result : 17.6168590701
+  Optimal MaxCut       : 19.0000000000
+  Approximation ratio  : 0.9272031090
+  Time taken (s)       : 60.110110
+
+GRAPH 29
+  Edge list: (0,3), (0,6), (0,10), (1,2), (1,3), (1,8), (2,9), (2,12), (3,13), (4,5), (4,7), (4,11), (5,6), (5,10), (6,13), (7,9), (7,11), (8,9), (8,10), (11,12), (12,13)
+  Decomposition iterations:
+    iter  1 : cut set = {1, 9, 12}  ->  reduced (|cut|=3, |S1|=1, |S2|=10)
+    iter  2 : cut set = {3, 5, 11}  ->  reduced (|cut|=3, |S1|=1, |S2|=9)
+    iter  3 : cut set = {4, 9, 10}  ->  reduced (|cut|=3, |S1|=1, |S2|=8)
+    iter  4 : cut set = {0, 1, 7}  ->  reduced (|cut|=3, |S1|=1, |S2|=7)
+    iter  5 : cut set = {0, 6, 8}  ->  reduced (|cut|=3, |S1|=1, |S2|=6)
+    iter  6 : cut set = {0, 4, 6}  ->  reduced (|cut|=3, |S1|=1, |S2|=5)
+    iter  7 : cut set = {3, 5, 6}  ->  reduced (|cut|=3, |S1|=1, |S2|=4)
+    iter  8 : cut set = {0, 1, 5}  ->  reduced (|cut|=3, |S1|=1, |S2|=3)
+    iter  9 : cut set = {2, 3}  ->  reduced (|cut|=2, |S1|=1, |S2|=3)
+    iter 10 : cut set = {0, 2, 4}  ->  reduced (|cut|=3, |S1|=1, |S2|=1)
+    iter 11 : cut set = {1, 2, 3}  ->  stop: cut does not split graph
+  Reduced graph : 4 nodes, 6 edges
+  Additive constant : 17.0000000000
+  Decomp MaxCut result : 18.3044284925
+  Optimal MaxCut       : 19.0000000000
+  Approximation ratio  : 0.9633909733
+  Time taken (s)       : 62.042281
+
+======================================================================

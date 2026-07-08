@@ -1,0 +1,121 @@
+==============================================================================
+ALGORITHM COMPARISON REPORT
+QAOA graph-decomposition (COMP_DECOMP.py / DEC_ANALYSIS.txt)
+        vs
+QE-Decomposition merge algorithm (MERGE_TEMP1.py / MERGE_ANALYSIS.txt)
+==============================================================================
+Generated: 2026-06-30T13:08:25
+Benchmark: 30 random 3-regular graphs on 14 nodes (seed = index)
+Both measured against the exact optimal MaxCut.
+'QAOA' = QAOA decomposition ; 'MERGE' = QE-Decomposition algorithm.
+
+------------------------------------------------------------------------------
+OVERALL SUMMARY (30 graphs)
+------------------------------------------------------------------------------
+metric                            QAOA-decomp          MERGE
+mean approx ratio                    0.928988       0.974248
+min approx ratio                     0.792570       0.736842
+max approx ratio                     1.000000       1.027778
+std approx ratio                     0.044125       0.055757
+mean |error| from optimal            1.295062       0.514000
+max |error| from optimal             3.941174       5.000000
+exact-optimal hits                          2             17
+overshoots (ratio > 1)                      0              2
+mean time (s)                         75.9726         0.5724
+total time (s)                      2279.1792        17.1714
+
+Accuracy (closer to exact optimum = better; |error| basis):
+  QAOA-decomp more accurate on : 10 graphs
+  MERGE more accurate on       : 20 graphs
+  ties                         : 0 graphs
+  mean |error|: QAOA-decomp=1.2951 vs MERGE=0.5140  (lower is better)
+  MERGE is 132.7x faster overall (wall time).
+
+  Caveat: MERGE's mean ratio looks high partly because its
+  approximate reweighting can OVERSHOOT the true optimum (ratio>1),
+  i.e. it reports cut values that are not physically attainable.
+  QAOA-decomp stays a valid lower bound (ratio <= 1) on every graph.
+
+------------------------------------------------------------------------------
+PER-GRAPH COMPARISON  (winner = closer to exact optimum)
+------------------------------------------------------------------------------
+graph   optimal  QAOA_ratio MERGE_ratio   QAOA_t(s)  MERGE_t(s)   more_acc
+    0      18.0    0.960092   0.888889      62.2871      1.9151       QAOA
+    1      19.0    0.946654   1.000000      97.3687      1.0442      MERGE
+    2      17.0    0.885417   1.000000      31.6973      0.0366      MERGE
+    3      19.0    0.792570   1.000000      20.4423      0.0323      MERGE
+    4      18.0    0.863406   1.000000      31.4509      0.0221      MERGE
+    5      18.0    1.000000   0.916667      74.9613      0.6997       QAOA
+    6      18.0    0.950139   0.888889      93.8533      1.0556       QAOA
+    7      19.0    0.953921   0.947368      99.0721      0.6483       QAOA
+    8      18.0    0.912172   1.000000      79.2901      0.0453      MERGE
+    9      18.0    0.904524   1.000000      40.0084      0.0366      MERGE
+   10      18.0    0.934389   1.000000      85.8289      0.0676      MERGE
+   11      18.0    0.894039   0.999444      96.1649      0.9370      MERGE
+   12      19.0    0.981195   1.000526*     96.2006      1.5668      MERGE
+   13      19.0    0.953401   0.947368      90.3254      0.9723       QAOA
+   14      18.0    0.844620   1.000000      30.1900      0.0350      MERGE
+   15      18.0    0.943175   1.000000     105.1885      0.0390      MERGE
+   16      17.0    0.885417   1.000000      30.3744      0.0308      MERGE
+   17      19.0    0.919613   1.000000      80.8475      0.0431      MERGE
+   18      19.0    0.950485   0.947368     110.9181      0.5053       QAOA
+   19      18.0    1.000000   0.999444      85.9958      0.8388       QAOA
+   20      19.0    0.987261   0.979474     112.2511      2.2071       QAOA
+   21      17.0    0.918281   1.000000      46.3144      0.0277      MERGE
+   22      19.0    0.949232   0.947368      98.3175      1.1289       QAOA
+   23      18.0    0.912051   1.027778*    101.1811      0.6910      MERGE
+   24      19.0    0.932577   0.736842      92.1768      1.5102       QAOA
+   25      19.0    0.926228   1.000000      96.8484      0.4881      MERGE
+   26      18.0    0.951904   1.000000      82.9228      0.0422      MERGE
+   27      18.0    0.926284   1.000000      84.5491      0.0429      MERGE
+   28      19.0    0.927203   1.000000      60.1101      0.0387      MERGE
+   29      19.0    0.963391   1.000000      62.0423      0.4229      MERGE
+  (* = MERGE overshoot: reported MaxCut exceeds the true optimum)
+
+------------------------------------------------------------------------------
+PER-GRAPH MAXCUT VALUES
+------------------------------------------------------------------------------
+graph   optimal    QAOA_maxcut   MERGE_maxcut
+    0      18.0      17.281648      16.000000
+    1      19.0      17.986417      19.000000
+    2      17.0      15.052097      17.000000
+    3      19.0      15.058826      19.000000
+    4      18.0      15.541310      18.000000
+    5      18.0      18.000000      16.500000
+    6      18.0      17.102504      16.000000
+    7      19.0      18.124493      18.000000
+    8      18.0      16.419093      18.000000
+    9      18.0      16.281432      18.000000
+   10      18.0      16.819004      18.000000
+   11      18.0      16.092698      17.990000
+   12      19.0      18.642714      19.010000
+   13      19.0      18.114626      18.000000
+   14      18.0      15.203165      18.000000
+   15      18.0      16.977145      18.000000
+   16      17.0      15.052097      17.000000
+   17      19.0      17.472642      19.000000
+   18      19.0      18.059209      18.000000
+   19      18.0      18.000000      17.990000
+   20      19.0      18.757958      18.610000
+   21      17.0      15.610778      17.000000
+   22      19.0      18.035408      18.000000
+   23      18.0      16.416921      18.500000
+   24      19.0      17.718968      14.000000
+   25      19.0      17.598326      19.000000
+   26      18.0      17.134271      18.000000
+   27      18.0      16.673110      18.000000
+   28      19.0      17.616859      19.000000
+   29      19.0      18.304428      19.000000
+
+==============================================================================
+NOTES
+==============================================================================
+- QAOA-decomp: analytic p=1 QAOA reduction across minimum node cuts,
+  stops when the cut no longer separates the graph (or |K|>6, |V|<=2);
+  final reduced graph solved with analytic QAOA. Deterministic (seeded).
+- MERGE: minimum-node-cut reduction with Gurobi+least-squares reweighting,
+  an optional shot-based QAOA merge when |K|>3, stops at |V|<=M (M=5);
+  final reduced graph solved by brute force. Merge step is stochastic,
+  so MERGE ratios may vary by ~0.01-0.1 between runs.
+- Timings exclude the exact-optimal solve; they cover decomposition
+  plus the final small-graph solve only.

@@ -1,7 +1,9 @@
 import networkx as nx
 import random
 from datetime import datetime
+import matplotlib as mpl
 import matplotlib.pyplot as plt
+mpl.use('TkAgg')
 import numpy as np
 import random
 from itertools import combinations
@@ -17,19 +19,21 @@ from scipy.optimize import minimize
 import qiskit_aer as Aer
 from qaoa_helpers import *
 
+
 custom = """
 1 2
-1 3
-1 6
 2 3
 2 4
-3 4
+3 5
 4 5
 4 6
-5 6
+5 8
+6 7
+7 8
+7 9
+8 10
+9 10
 """
-
-
 
 """
 1 2
@@ -43,16 +47,20 @@ custom = """
 4 6
 """
 
-cn = 6
-reps = 1
-shots = 1600
-M = 5
-tau = 0.25
 
-def dec(strang):
-   temp = int(strang)
-   temp-=1
-   return str(temp)
+
+
+cn = 8
+
+
+reps = 1
+shots = 500
+M = 7
+tau = 0.2
+
+def getGString(g):
+   for u,v in g.edges():
+      print(f"{u + 1} {v + 1}")
 
 def group(pairs):
     parent = {}
@@ -98,7 +106,7 @@ def build_pauli_list(graph):
    return pauli_list, offset
 
 
-def kExps(graph, K, V2):
+def kExps(graph, K, V2, tran):
    nodes = list(graph.nodes())
    n = len(nodes)
 
@@ -123,19 +131,43 @@ def kExps(graph, K, V2):
 
    kSexp  = {from_idx[k]: zExpect(counts, k) for k in newK}
    vSexp  = {from_idx[v]: zExpect(counts, v) for v in newV2}
+
+   kv = {}
+   for ki in newK:
+      for vj in newV2:
+         kv[(ki, vj)] = zzExpect(counts, ki, vj)
+
+
    kDexp = {}
-   vDexp = {}
+   kDexpNew = {}
+   for a in range(len(newK)):
+      for b in range(a + 1, len(newK)):
+         ka,kb = newK[a], newK[b]
+         ni, nj = from_idx[ka], from_idx[kb]
+         kDexpNew[(ni,nj)] = zzExpect(counts,ka,kb)
+               
+   """
    for i in range(len(newK)):
       for j in range(i + 1, len(newK)):
-         ni, nj = from_idx[newK[i]], from_idx[newK[j]]
-         kDexp[(ni, nj)] = zzExpect(counts, newK[i], newK[j])
+         ki, kj = newK[i], newK[j]
+         ni, nj = from_idx[ki], from_idx[kj]
+         common = [v for v in newV2 if g_idx.has_edge(ki, v) and g_idx.has_edge(kj, v)]
+         if common:
+            kDexp[(ni, nj)] = sum(kv[(ki, v)] * kv[(kj, v)] for v in common) / len(common)
+         else:
+            kDexp[(ni, nj)] = 0.0
+         print(f"===Base vs Tran===\n")
+         print(f"Base {(ni,nj)} : {kDexpNew[(ni,nj)]}")
+         print(f"Tran: {(ni,nj)} : {kDexp[(ni,nj)]}\n")
+   """
 
+   vDexp = {}
    for i in range(len(newV2)):
       for j in range(i + 1, len(newV2)):
          ni, nj = from_idx[newV2[i]], from_idx[newV2[j]]
          vDexp[(ni, nj)] = zzExpect(counts, newV2[i], newV2[j])
-    
-   return kSexp, kDexp, vSexp, vDexp
+
+   return kSexp, kDexpNew, vSexp, vDexp
 
 
 
@@ -166,13 +198,14 @@ def toClassical(graph, Ks):
          polyMap[uT]+=w
       if (vT) not in polyMap:
          polyMap[vT] = w
-
       else:
          polyMap[vT]+= w
+      
       if(uT + vT) not in polyMap:
-         polyMap[uT+vT]= -2*w
+         polyMap[uT+vT]= -2*w    
       else:
          polyMap[uT+vT]+=  -2*w
+      
    fullC = ""
    for entry in polyMap.items():
       if(entry[0] in NKs):
@@ -184,8 +217,8 @@ def toClassical(graph, Ks):
       else:
          pass
    #print("man made: " + fullC)
-   if(len(NKs) > 0):
-      return {term[0]:term[1] for term in polyMap.items() if term[0] not in NKs}
+   #if(len(NKs) > 0):
+   #   return {term[0]:term[1] for term in polyMap.items() if term[0] not in NKs}
    else:
       return polyMap
 
@@ -250,6 +283,10 @@ def tableUpdate(newM, fixTable):
 
 
 def decompo(g, limit):
+   K = []
+   numMerges = 0
+   totalMerged = 0
+   gaps = []
    gNum = -1
    round = 1
    cg = g.copy()
@@ -258,71 +295,106 @@ def decompo(g, limit):
    fixTable = {}
    while(len(cg.nodes()) > limit):
       V2andK, K, V1, V2 = getInduced(cg)
-      print(f"---Round {round}: K={K}, V1={V1}, V2={V2}---")
+      if(round % 10 == 0):
+         print(f"Round {round}")
+      noMergeSignal = False
+      #draw(V2andK)
       if(len(K) > 3):
-         #draw(V2andK)
-         mergedN, cg, K = mergeAndUpdate(cg, V2andK, K, V2, gNum)
+         kOld = len(K)
+         mergedN, cg, K, _ = mergeAndUpdate2(cg, V2andK, K, V2, gNum)
          V2andK = cg.subgraph(K+V2)
+         gaps.append(kOld - len(K))
          #draw(cg)
-         print(f"mergedN: {mergedN}")
+         #print(f"mergedN: {mergedN}")
          gNum -= len(mergedN)
          tableUpdate(mergedN, fixTable)
-         print(f"fixTable:{fixTable}")
-      J_list = ReWeight(V2andK,K,V2)
+         #print(f"fixTable:{fixTable}")
+         noMergeSignal = not mergedN
+      if(len(K) > 7):
+         break
+      if(len(K) > 3 and noMergeSignal):
+         J_list = gurobiReweight(V2andK, K, V2)
+      else:
+         J_list = ReWeight(V2andK,K,V2)
       #print(J_list)
       cg.remove_nodes_from(V2)
-      for edge,val in J_list.items():
+      for edge,val in list(J_list.items()):
          if(edge == 'seaHat'):
             cIsh+= J_list['seaHat']
          elif((edge[0],edge[1]) in cg.edges()):
-            cg[edge[0]][edge[1]]['weight'] = val
+            cg[edge[0]][edge[1]]['weight'] += val
          else:
             cg.add_edge(edge[0],edge[1])
             cg[edge[0]][edge[1]]['weight'] = val
       #draw(cg)
       round+=1
-   print(f"!!!seaHat:{cIsh}\n!!!table:{fixTable}")
-   draw(cg)
+   
+   #draw(cg)
    #print(f"funny maxCUT of this final graph:{nx.approximation.randomized_partitioning(cg, seed=1)}")
-   bestCut, bestSet = bruteMaxCut(cg)
-   print(f"Best cut on final is {bestCut} on {bestSet}\n")
-   exit()
+   if(len(K) >= 7):
+      bestCut = solvePartial("full", cg, [])
+   else:
+      bestCut, bestSet = bruteMaxCut(cg)
+   print(f"Final Round: {round - 1}")
+
+   print(f"gaps:{gaps}")
+   print(f"!!!seaHat:{cIsh}\n!!!table:{fixTable}")
+   print(f"Best cut on final is {bestCut}\n")
+   crowd = set()
+   for key, val in fixTable.items():
+      crowd.update(set(val)) 
+   return cIsh + bestCut, crowd, -1*(gNum + 1), gaps
 
 
 
 
-def mergeAndUpdate(g0, sub0, K, V2, gStart):
-   kSingle, kDouble, vSingle, vDouble = kExps(sub0, K, V2)
-   print(f"K single: {kSingle}\nK double: {kDouble}\nV2 single: {vSingle}\nV2 double:{vDouble}")
-   ##maybe look into merging the V1s? 
+def mergeAndUpdate2(g0, sub0, K, V2, gStart):
+   kSingle, kDouble, vSingle, vDouble = kExps(sub0, K, V2, True)
+   #print(f"K double: {kDouble}\n")
    gSets = [set(pair[0]) for pair in kDouble.items() if pair[1] >= tau]
    groups = group(gSets)
    labeling = {}
-   toRemove = []
-   toAdd = {}
-   for i in range(len(groups)):
-      #print(f"Group {gStart}: {groups[i]}")
-      labeling[gStart] = set([node for node in groups[i]])
-      g0.add_node(gStart)
-      K.append(gStart)
-      for node in groups[i]:
-         for nbr, dic in g0.adj[node].items():
-            if( (gStart,nbr) in toAdd ):
-               toAdd[(gStart,nbr)]+= g0[node][nbr]['weight']
-            else:
-               toAdd[(gStart,nbr)] = 1.0
+   internalW = 0
+   if(len(groups) >= 1):
+      # Label every group up front and map each member -> its supernode, so a
+      # neighbor can still be resolved to the right supernode even after its
+      # group-mates have already been removed from g0.
+      superOf = {}
+      for gr in groups:
+         labeling[gStart] = gr
+         for node in gr:
+            superOf[node] = gStart
+         K.append(gStart)
+         gStart -= 1
 
-            toRemove.append((node,nbr))
-      
-      gStart-=1
-   g0.remove_edges_from(toRemove)
-   g0.add_weighted_edges_from([(u,v,w) for (u,v),w in toAdd.items() ])
-   g0.remove_nodes_from([x for x in g0.nodes() if g0.degree[x] == 0])
-   newK = []
-   for new in K:
-      if(new in g0):
-         newK.append(new)
-   return labeling, g0, newK
+      toAdd = {}
+      toRemove = []
+      for sup, gr in labeling.items():
+         g0.add_node(sup)   # keep the supernode even if it has no external edges
+         for node in gr:
+            for nbr in g0[node]:
+               # Remap the neighbor to its supernode if it is also being merged;
+               # otherwise it stays a plain (or already-merged) node.
+               nbrSup = superOf.get(nbr, nbr)
+               if(nbrSup == sup):
+                  # internal edge: nodes are removed as we go, so each undirected
+                  # internal edge is seen exactly once here.
+                  internalW += g0[node][nbr]['weight']
+               elif((sup, nbrSup) in toAdd):
+                  toAdd[(sup, nbrSup)] += g0[node][nbr]['weight']
+               else:
+                  toAdd[(sup, nbrSup)] = g0[node][nbr]['weight']
+               toRemove.append((node, nbr))
+            g0.remove_edges_from(toRemove)
+            g0.remove_node(node)
+            K.remove(node)
+            toRemove = []
+
+      g0.add_weighted_edges_from([(u, v, w) for (u, v), w in toAdd.items()])
+
+   #draw(g0)
+   #print(f"INTERNAL: {internalW}")
+   return labeling, g0, K, internalW
 
 def genPerms(num):
    b = []
@@ -333,7 +405,6 @@ def genPerms(num):
 
 def solvePartial(pos, subG, K):
    m = gp.Model("pSolver")
-   cl = toClassical(subG, K)
    m.ModelSense = GRB.MAXIMIZE
    m.update()
    m.setParam("OutputFlag",0) 
@@ -353,18 +424,42 @@ def solvePartial(pos, subG, K):
       m.addConstr(y[j] <= 2 - x[j[0]] +- x[j[1]]) #color of edge - if both vertices are 1, then I can't do it
       m.addConstr(y[j] >= x[j[0]] - x[j[1]]) 
       m.addConstr(y[j] >= x[j[1]] - x[j[0]]) 
-
+   
+   interior = 0
    p = 0
-   for k in K:
-      m.addConstr(x[k] == pos[p])
-      p+=1
+   if(pos != "full"):
+      for k in K:
+         m.addConstr(x[k] == pos[p])
+         p+=1
+
       
    m.update()
    m.optimize()
    obj = m.getObjective()
    obj_val = obj.getValue()
+
+   """if(pos == "full"):
+      side_0 = set()
+      side_1 = set()
+      for i in subG.nodes:
+         val = round(x[i].X)  # .X gives the solved value; round handles float noise
+         if val == 1:
+            side_1.add(i)
+         else:
+            side_0.add(i)
+
+   # --- Retrieve the cut edges themselves ---
+      cut_edges = [j for j in subG.edges if round(y[j].X) == 1]
+
+   # --- Summary ---
+      cut_value = obj.getValue() 
+      print(f"Optimal cut value: {cut_value}") 
+      print(f"Side 0 ({len(side_0)} nodes): {sorted(side_0)}")
+      print(f"Side 1 ({len(side_1)} nodes): {sorted(side_1)}")
+   """
    m.update()
-   m.display()
+   m.close()
+   #m.display()
    """with open("model.lp", "w") as f:
       m.write("model.lp")
 
@@ -373,12 +468,29 @@ def solvePartial(pos, subG, K):
    """
    return obj_val
 
+
+
 def ReWeight(sub, K, V2):
-   c_hat = 0
+   # double-count every K-K edge.  Strip them before solving.
+   sub = sub.copy()
    kM = len(K)
+   Kset = set(K)
+   init = toClassical(sub, [])
+   kInts = []
+   for kNode in K:
+      kInts.append( ("x" + str(kNode), init["x" + str(kNode)]) )
+   interiors = [(u,v,w) for (u, v, w) in sub.edges.data("weight") if u in Kset and v in Kset ]
+ 
+   #print(f"kInts:{kInts}")
+   #print(f"Interiors:{interiors}")
+
+   sub.remove_edges_from([(u, v) for u, v in sub.edges() if u in Kset and v in Kset])
+   oneIdx = 0   
+   c_hat = 0
    b = []
    gen = list(genPerms(kM))
    if(kM <= 20):
+      additive = 0
       slvRows = []
       fvect = []
       rows = [bin for bin in gen if bin.count('1') <= 1]
@@ -386,11 +498,17 @@ def ReWeight(sub, K, V2):
          currBin = rows[l]
          theString =[int(currBin[i]) for i in range(kM)]
          if(l>0):
+            oneIdx = theString.index(1)
+            additive = kInts[oneIdx][1]
+            #print(f"additive:{additive}")
+
             slvRow = [(x + 1) % 2 for x in theString]
          else:
             slvRow = [x for x in theString]
          b.append(theString)
-         b[-1].append(solvePartial(theString,sub,K))
+         partialSol = solvePartial(theString,sub,K)
+         b[-1].append(partialSol)
+         
          if(kM == 1):
             return dict([('seaHat', b[-1][-1])])
          fvect.append(b[-1][-1])
@@ -414,15 +532,45 @@ def ReWeight(sub, K, V2):
       exit()
       #nextP = next(gen)
       #bitS = [int(nextP[j]) for j in range(len(k))]
-   
+
    return b
 
 
-   
+def gurobiReweight(sub, K, V2):
+   sub = sub.copy()
+   kM = len(K)
+   Kset = set(K)
+   sub.remove_edges_from([(u, v) for u, v in sub.edges() if u in Kset and v in Kset])
 
+   posOf = {node: idx for idx, node in enumerate(K)}
+   edgePairs = list(combinations(K, 2))
+   assigns = [[int(bit) for bit in bits] for bits in genPerms(kM)]
 
+   rhs = [solvePartial(a, sub, K) for a in assigns]
+   seaHat = rhs[0]
+   rhs = [v - seaHat for v in rhs]
 
+   m = gp.Model("gurobiReweight")
+   m.setParam("OutputFlag", 0)
 
+   w = {pair: m.addVar(vtype=GRB.CONTINUOUS, lb=-GRB.INFINITY, name=f"w{pair[0]}_{pair[1]}")
+        for pair in edgePairs}
+   e = {i: m.addVar(vtype=GRB.CONTINUOUS, name=f"e{i}") for i in range(len(assigns))}
+   m.update()
+
+   for i, a in enumerate(assigns):
+      cutTerms = gp.quicksum(w[pair] for pair in edgePairs if a[posOf[pair[0]]] != a[posOf[pair[1]]])
+      m.addConstr(e[i] + cutTerms == rhs[i])
+
+   m.setObjective(gp.quicksum(e[i] for i in range(len(assigns))), GRB.MINIMIZE)
+   m.update()
+   m.optimize()
+
+   results = {'seaHat': seaHat}
+   for pair in edgePairs:
+      results[pair] = w[pair].X
+   m.close()
+   return results
 
 
 def bruteMaxCut(graph):
@@ -476,15 +624,44 @@ def startUp():
 
    elif(mode == "1"):
       #testG = makeCustom(custom, cn)
-      testG = nx.random_regular_graph(3, 20)
-      for u,v in testG.edges():
-         testG[u][v]['weight'] = 1
-      draw(testG)
-      print("")
-      bestCut, bestSet = bruteMaxCut(testG)
-      print(f"best maxCut {bestCut} on {bestSet}\n")
-      decompo(testG, M)
-
+      graphStrings = {}
+      numToDo = 20
+      stats = [[0,0,0,0,0], [0,0,0,0,0]]
+      sNames = ["Average APX : ","Average Total Merged : ","Average Merge Occurances : ", "Average of Average K reduction : ", "Average non-0 K reduction : "]
+      for j in range(numToDo):
+         print(f"Graph {j}:\n")
+         testG = nx.random_regular_graph(3,200)
+         for u,v in testG.edges():
+            testG[u][v]['weight'] = 1
+         #draw(testG)
+         #graphStrings[j] = getGString(testG) 
+         bestCut = solvePartial("full", testG, [])
+         #val, part = nx.approximation.one_exchange(testG, seed = 1)
+         #print(f"oneExch:{val} with {part}")
+         for i in list([0.1,0.2]):
+            global tau
+            tau = i
+            total, mergedNodes, numMerges, diffs = decompo(testG, M)
+            print(f"\n\n ====FINAL RESULTS====\n\n")
+            print(f"Tau Parameter : {i}\n")
+            print(f"Approximate/ Actual :  {total} / {bestCut} : {total / bestCut}\n")
+            print(f"Total Merged Nodes : {len(mergedNodes)}\n")
+            print(f"Number of Total Merge Occurances  : {numMerges}\n")
+            print(f"Average K reduction : {sum(diffs) / len(diffs)}")
+            nonZero = [d for d in diffs if d > 0]
+            stats[int(str(i)[-1]) - 1][0]+= (total / bestCut) / numToDo
+            stats[int(str(i)[-1]) - 1][1]+= (len(mergedNodes)) / numToDo
+            stats[int(str(i)[-1]) - 1][2]+= (numMerges) / numToDo
+            stats[int(str(i)[-1]) - 1][3]+= (sum(diffs) / len(diffs)) / numToDo
+            
+            if(len(nonZero) > 0):
+               print(f"Average non-0 K reduction : {sum(nonZero) /  len([d for d in diffs if d > 0])}")
+               stats[int(str(i)[-1]) - 1][4]+= sum(nonZero) / len(nonZero)/20
+      for t in stats:
+         print(f"\n\n FINAL TAU = {(stats.index(t) + 1) / 10 } STATS OVER {numToDo} GRAPHS")
+         for st in range(len(t)):
+            print(sNames[st] + str(t[st]))
+         print("==========\n")
 
 if __name__ == "__main__":
    startUp()

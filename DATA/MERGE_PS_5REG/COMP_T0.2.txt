@@ -1,0 +1,46 @@
+====================================================================================
+MERGE ABLATION  --  threshold tau = 0.2
+NO-MERGE  vs  MERGE(tau=0.2)
+====================================================================================
+Generated: 2026-06-30T18:13:05
+Benchmark: 10 random 5-regular graphs on 20 nodes (seed = graph index)
+
+Both arms: identical pipeline (min-node-cut split, exact ILP reweight +
+nonnegative slack LP, stop at |V|<=M=5, exact brute-force final solve).
+Only difference: MERGE collapses cut-node pairs with <Z_iZ_j> >= 0.2 into
+supernodes when |K|>3, then reweights; NO-MERGE reweights the clique directly.
+Merge arm uses a shot-based QAOA simulator -> mildly stochastic.
+
+------------------------------------------------------------------------------------
+OVERALL SUMMARY (10 graphs)
+------------------------------------------------------------------------------------
+metric                               NO-MERGE     MERGE(0.2)
+mean approx ratio                    0.951045       0.954891
+min approx ratio                     0.909954       0.900000
+max approx ratio                     0.994152       1.000000
+mean |error| from optimal            1.945004       1.800000
+exact-optimal hits                          0              4
+overshoots (ratio>1)                        0              0
+total decomp time (s)                 35.3957        40.0303
+
+Head-to-head (accuracy vs exact optimum):
+  identical result            : 0 graphs
+  MERGE strictly closer       : 5 graphs
+  NO-MERGE strictly closer    : 5 graphs
+
+------------------------------------------------------------------------------------
+PER-GRAPH COMPARISON
+------------------------------------------------------------------------------------
+graph optimal    NOMERGE      MERGE  NM_ratio  MG_ratio   |K|>3  merged verdict
+    0    42.0    38.8450    38.0000    0.9249    0.9048      15       4 NOMERGE+
+    1    40.0    36.3981    40.0000    0.9100    1.0000      15       5 MERGE+
+    2    39.0    36.6667    37.6667    0.9402    0.9658      15       5 MERGE+
+    3    38.0    36.2083    38.0000    0.9529    1.0000      14       4 MERGE+
+    4    40.0    38.2166    40.0000    0.9554    1.0000      14       5 MERGE+
+    5    38.0    36.8333    38.0000    0.9693    1.0000      15       5 MERGE+
+    6    40.0    38.6667    36.6667    0.9667    0.9167      15       4 NOMERGE+
+    7    38.0    37.7778    35.6667    0.9942    0.9386      15       6 NOMERGE+
+    8    39.0    36.8611    36.0000    0.9452    0.9231      15       5 NOMERGE+
+    9    40.0    38.0763    36.0000    0.9519    0.9000      14       5 NOMERGE+
+
+====================================================================================
