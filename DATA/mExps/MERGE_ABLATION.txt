@@ -1,40 +1,14 @@
-====================================================================================
 MERGE ABLATION  --  isolating the |K|>3 supernode-merge step
-====================================================================================
-Generated: 2026-06-30T16:45:55
-Benchmark: 30 random 3-regular graphs on 14 nodes (seed = graph index)
+OVERALL SUMMARY 
 
-Both arms: identical pipeline -- min-node-cut split, eliminate smallest
-fragment, EXACT ILP reweight (all 2^|K| colorings, Gurobi) + nonnegative
-slack/error LP, stop at |V|<=M=5, EXACT brute-force final solve.
-Only difference: NO-MERGE reweights |K|>3 cliques directly (lossy);
-MERGE collapses QAOA-correlated cut nodes to |K|<=3 first (exact-again).
-Merge arm uses a shot-based QAOA simulator -> mildly stochastic.
-
-------------------------------------------------------------------------------------
-OVERALL SUMMARY (30 graphs)
-------------------------------------------------------------------------------------
 metric                               NO-MERGE          MERGE
 mean approx ratio                    0.989376       0.994639
 min approx ratio                     0.944444       0.944444
 max approx ratio                     1.000000       1.000000
-mean |error| from optimal            0.200000       0.100000
-exact-optimal hits                         24             27
-overshoots (ratio>1)                        0              0
-total decomp time (s)                  2.9642        18.6694
 
-Head-to-head (accuracy vs exact optimum):
-  identical result            : 25 graphs
-  MERGE strictly closer       : 4 graphs
-  NO-MERGE strictly closer    : 1 graphs
-
-VALIDATION: on graphs with zero |K|>3 rounds the two arms MUST be
-identical (the merge never fires). Divergence appears only where |K|>3.
-
-------------------------------------------------------------------------------------
-PER-GRAPH COMPARISON
-------------------------------------------------------------------------------------
-graph optimal    NOMERGE      MERGE NM_ratio MG_ratio    |K|>3   merged verdict
+PER-GRAPH COMPARISON 
+graph optimal NOMERGE MERGE NM_ratio 
+MG_ratio |K|>3 merged verdict
     0    18.0    18.0000    18.0000   1.0000   1.0000        2        1 same
     1    19.0    19.0000    18.0000   1.0000   0.9474        4        2 NOMERGE+
     2    17.0    17.0000    17.0000   1.0000   1.0000        0        0 same
@@ -66,9 +40,6 @@ graph optimal    NOMERGE      MERGE NM_ratio MG_ratio    |K|>3   merged verdict
    28    19.0    19.0000    19.0000   1.0000   1.0000        0        0 same
    29    19.0    18.0000    19.0000   0.9474   1.0000        2        1 MERGE+
 
-------------------------------------------------------------------------------------
-DIAGNOSTICS  (NO-MERGE total slack lost = sum of e_i across all rounds)
-------------------------------------------------------------------------------------
 graph     NM_slack      NM_maxK  NM_finalV  MG_finalV
     0       2.0000            4          5          3
     1       8.0000            5          5          4
@@ -101,9 +72,6 @@ graph     NM_slack      NM_maxK  NM_finalV  MG_finalV
    28       0.0000            3          5          5
    29       2.0000            4          5          4
 
-====================================================================================
-PER-GRAPH ROUND LOGS
-====================================================================================
 
 GRAPH 0  (optimal=18)
   NO-MERGE  -> cut=18.0000  ratio=1.0000
@@ -648,4 +616,3 @@ GRAPH 29  (optimal=19)
       round  7 : K={9, 12, 5} -> removed |V2|=1, |K|=3
       round  8 : K={1, 10, 12, 5} -> removed |V2|=1, |K|=4  (|K|>3; merged supernodes [-1] -> reweight |K|=2)
 
-====================================================================================

@@ -18,7 +18,7 @@ from gurobipy import GRB
 from scipy.optimize import minimize
 import qiskit_aer as Aer
 from qaoa_helpers import *
-
+import time
 
 custom = """
 1 2
@@ -283,6 +283,7 @@ def tableUpdate(newM, fixTable):
 
 
 def decompo(g, limit):
+
    K = []
    numMerges = 0
    totalMerged = 0
@@ -630,7 +631,7 @@ def startUp():
       sNames = ["Average APX : ","Average Total Merged : ","Average Merge Occurances : ", "Average of Average K reduction : ", "Average non-0 K reduction : "]
       for j in range(numToDo):
          print(f"Graph {j}:\n")
-         testG = nx.random_regular_graph(3,200)
+         testG = nx.random_regular_graph(3,400)
          for u,v in testG.edges():
             testG[u][v]['weight'] = 1
          #draw(testG)
@@ -664,4 +665,13 @@ def startUp():
          print("==========\n")
 
 if __name__ == "__main__":
-   startUp()
+   nG = nx.erdos_renyi_graph(30,0.1)
+   while (not nx.is_connected(nG) ):
+      nG = nx.erdos_renyi_graph(30,0.1)
+   for u,v in nG.edges():
+      nG[u][v]['weight'] = 1
+   sT = time.time()
+   total, mergedNodes, numMerges, diffs = decompo(nG, 7)
+   eT = time.time()
+   print(eT - sT)
+   #startUp()

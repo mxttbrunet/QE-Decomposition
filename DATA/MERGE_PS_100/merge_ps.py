@@ -1,27 +1,4 @@
 #!/usr/bin/env python3
-"""
-MERGE_PS_100/merge_ps.py
-========================
-Threshold sweep of the MERGE node-merge step, using the SAME controlled ablation
-as ../mExps/merge_ablation.py, across merge thresholds tau in {0.1, 0.2, 0.3, 0.4}.
-
-Benchmark : 10 random 4-regular graphs on 20 nodes (seed = graph index).
-(4-regular -> min node cut ~4, so |K|>3 rounds -- where the merge fires -- are
-the common case, making this a strong stress test of the merge step.)
-
-For every graph both arms run an IDENTICAL pipeline (min-node-cut split, exact
-ILP reweight with nonnegative slack/error term, exact brute-force final solve);
-the ONLY difference is whether |K|>3 rounds first merge QAOA-correlated cut nodes
-into supernodes.  The merge threshold tau decides which cut-node pairs are
-"correlated enough" to merge:  pair merged iff  <Z_i Z_j> >= tau.
-
-  * NO-MERGE is tau-independent -> computed once, shared across all four reports.
-  * MERGE(tau) is recomputed for each tau.
-
-Outputs (this directory):
-  COMP_T0.1.txt  COMP_T0.2.txt  COMP_T0.3.txt  COMP_T0.4.txt   (NO-MERGE vs MERGE(tau))
-  COMP_BY_T.txt                                                 (all thresholds together)
-"""
 
 import os
 import sys
@@ -30,11 +7,11 @@ import numpy as np
 import networkx as nx
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, os.path.join(HERE, "..", "mExps"))   # reuse the ablation machinery
+sys.path.insert(0, os.path.join(HERE, "..", "mExps"))   
 sys.path.insert(0, "/home/mxttbrunet/QAOA-Graph-Decomp")
 sys.path.insert(0, "/home/mxttbrunet/QE-Decomposition")
 
-import merge_ablation as ab          # run_decompo, reweightFull, quiet, mt, cd
+import merge_ablation as ab          
 mt = ab.mt
 cd = ab.cd
 
@@ -58,9 +35,6 @@ def tag(tau):
     return ("%.1f" % tau)
 
 
-# ---------------------------------------------------------------------------
-# Per-threshold report: NO-MERGE vs MERGE(tau)
-# ---------------------------------------------------------------------------
 def write_threshold_report(tau, opt, nm, mg, path):
     opt = np.array(opt, float)
     nmc = np.array([r["cut"] for r in nm], float)
@@ -135,9 +109,6 @@ def write_threshold_report(tau, opt, nm, mg, path):
     }
 
 
-# ---------------------------------------------------------------------------
-# Combined report across all thresholds
-# ---------------------------------------------------------------------------
 def write_combined(opt, nm, per_tau, path):
     opt = np.array(opt, float)
     nmc = np.array([r["cut"] for r in nm], float)
@@ -226,7 +197,6 @@ def write_combined(opt, nm, per_tau, path):
 def main():
     graphs = build_graphs()
 
-    # ---- exact optimal + tau-independent NO-MERGE baseline (once) ----
     opt = []
     nm = []
     for i, G in enumerate(graphs):
@@ -236,7 +206,6 @@ def main():
         print("baseline graph %2d opt=%.1f NO-MERGE=%.4f (|K|>3=%d)"
               % (i, opt[i], nm[i]["cut"], nm[i]["n_big"]))
 
-    # ---- MERGE(tau) for each threshold ----
     per_tau = []
     for tau in TAUS:
         mt.tau = tau

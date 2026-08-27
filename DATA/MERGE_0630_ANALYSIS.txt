@@ -1,26 +1,5 @@
-========================================================================
 MERGE_0630 ALGORITHM ANALYSIS
-(MERGE_TEMP1 decomposition + Option B fallback reweight)
-========================================================================
-Generated: 2026-06-30T13:57:16
-Batch: 30 random 3-regular graphs on 14 nodes (seed = graph index)
-Stopping rule: reduce while |V| > M, with M = 5
-Fallback: when |K|>3 and the QAOA merge fails to reduce K<=3, reweight
-with the full-enumeration nonnegative-slack LP (overshoot-safe).
-Final MaxCut = bruteMaxCut(reduced graph) + accumulated seaHat constant
-Total fallback rounds used across all graphs: 3
 
-------------------------------------------------------------------------
-AGGREGATE SUMMARY
-------------------------------------------------------------------------
-Graphs run            : 30
-Approximation ratio   : mean=0.971296  min=0.815789  max=1.027778  std=0.047484
-Overshoots (ratio>1)  : 1
-Time per graph (s)    : mean=0.5028  min=0.0221  max=1.6146  total=15.0844
-
-------------------------------------------------------------------------
-PER-GRAPH RESULTS
-------------------------------------------------------------------------
 graph  decomp_maxcut    optimal   approx_ratio       time_s fb_rounds
     0      16.000000       18.0       0.888889       1.3668         1
     1      19.000000       19.0       1.000000       1.0336         0
@@ -53,9 +32,6 @@ graph  decomp_maxcut    optimal   approx_ratio       time_s fb_rounds
    28      19.000000       19.0       1.000000       0.0364         0
    29      19.000000       19.0       1.000000       0.4397         0
 
-========================================================================
-PER-GRAPH DETAIL (cut set for each decomposition round)
-========================================================================
 
 GRAPH 0
   Edge list: (0,2), (0,5), (0,7), (1,5), (1,9), (1,13), (2,7), (2,8), (3,4), (3,6), (3,8), (4,7), (4,9), (5,11), (6,9), (6,12), (8,11), (10,11), (10,12), (10,13), (12,13)
@@ -587,4 +563,3 @@ GRAPH 29
   Approximation ratio  : 1.0000000000
   Time taken (s)       : 0.439665
 
-========================================================================

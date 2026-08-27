@@ -1,44 +1,13 @@
-================================================================================
 FINAL COMPARISON: QAOA-Decomposition  vs  MERGE FINAL
-================================================================================
-Generated: 2026-06-30T15:39:14
-Benchmark: 30 random 3-regular graphs on 14 nodes (seed = graph index)
-Both measured against the exact optimal MaxCut (Gurobi).
 
-QAOA-Decomposition : analytic p=1 QAOA reduction across minimum node
-    cuts; stops when the cut no longer separates the graph; final
-    reduced graph solved with analytic QAOA. Deterministic (seeded).
-MERGE FINAL        : minimum-node-cut reduction with full-enumeration
-    nonnegative-slack reweighting (overshoot-safe, no rounding) and a
-    shot-based QAOA merge for |K|>3 with supernodes kept in the cut
-    set; stops at |V| <= M=5; final reduced graph solved by brute force.
-Timings exclude the exact-optimal solve (decomposition + final solve only).
-
---------------------------------------------------------------------------------
-OVERALL SUMMARY (30 graphs)
---------------------------------------------------------------------------------
 metric                            QAOA-decomp      MERGE FINAL
 mean approx ratio                    0.928988         0.994639
 min approx ratio                     0.792570         0.944444
 max approx ratio                     1.000000         1.000000
 std approx ratio                     0.044125         0.016088
 mean |error| from optimal            1.295062         0.100000
-max |error| from optimal             3.941174         1.000000
-exact-optimal hits                          2               27
-overshoots (ratio > 1)                      0                0
-mean time per graph (s)               68.2635           0.4476
-total time (s)                      2047.9051          13.4265
 
-Accuracy (closer to exact optimum is better; |error| basis):
-  QAOA-decomp more accurate on : 2 graphs
-  MERGE FINAL more accurate on : 26 graphs
-  ties                         : 2 graphs
-  MERGE FINAL is 152.5x faster overall (wall time).
-  Neither algorithm overshoots: both stay valid lower bounds (ratio <= 1).
 
---------------------------------------------------------------------------------
-PER-GRAPH COMPARISON  (winner = closer to exact optimum)
---------------------------------------------------------------------------------
 graph   optimal   QAOA_ratio  MERGE_ratio   QAOA_t(s)  MERGE_t(s)     winner
     0      18.0     0.960092     1.000000     73.5821      1.2263      MERGE
     1      19.0     0.946654     0.947368    100.0262      0.8934      MERGE
@@ -71,9 +40,6 @@ graph   optimal   QAOA_ratio  MERGE_ratio   QAOA_t(s)  MERGE_t(s)     winner
    28      19.0     0.927203     1.000000     53.6220      0.0458      MERGE
    29      19.0     0.963391     1.000000     55.6695      0.4354      MERGE
 
---------------------------------------------------------------------------------
-PER-GRAPH MAXCUT VALUES
---------------------------------------------------------------------------------
 graph   optimal     QAOA_maxcut    MERGE_maxcut
     0      18.0       17.281648       18.000000
     1      19.0       17.986417       18.000000
@@ -106,9 +72,6 @@ graph   optimal     QAOA_maxcut    MERGE_maxcut
    28      19.0       17.616859       19.000000
    29      19.0       18.304428       19.000000
 
-================================================================================
-PER-GRAPH MERGE FINAL CUT SETS (per decomposition round)
-================================================================================
 
 GRAPH 0  (optimal=18, MERGE result=18.0000, ratio=1.0000)
   round  1 : cut set K = {1, 4, 6}  ->  removed |V2|=1, |K|=3
@@ -371,4 +334,3 @@ GRAPH 29  (optimal=19, MERGE result=19.0000, ratio=1.0000)
   round  7 : cut set K = {9, 12, 5}  ->  removed |V2|=1, |K|=3
   round  8 : cut set K = {1, 10, 12, 5}  ->  removed |V2|=1, |K|=4  (|K|>3 merge; supernodes [-1] kept in reweight cut set)
 
-================================================================================

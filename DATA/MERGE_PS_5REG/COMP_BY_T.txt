@@ -1,28 +1,8 @@
-================================================================================================
-COMPARISON BY MERGE THRESHOLD  (COMP_BY_T)
-================================================================================================
-Generated: 2026-06-30T18:15:17
-Benchmark: 10 random 5-regular graphs on 20 nodes (seed = graph index)
 
-Controlled ablation: both arms share an identical exact-ILP + nonnegative-
-slack reweight pipeline with an exact brute-force final solve; the only
-difference is the |K|>3 supernode-merge.  The merge threshold tau sets the
-ZZ-correlation cutoff for merging cut-node pairs.  NO-MERGE is the common,
-tau-independent baseline; each MERGE(tau) is compared against it.
-
-------------------------------------------------------------------------------------------------
-BASELINE  NO-MERGE  (tau-independent)
-------------------------------------------------------------------------------------------------
   mean approx ratio        : 0.951045
   min approx ratio         : 0.909954
   mean |error| from optimal: 1.945004
-  exact-optimal hits       : 0 / 10
-  overshoots (ratio>1)     : 0
-  total decomp time (s)    : 35.3957
 
-------------------------------------------------------------------------------------------------
-MERGE(tau)  SUMMARY  vs the common NO-MERGE baseline
-------------------------------------------------------------------------------------------------
    tau    mean_r     min_r  mean|err|   exact   over    same   MERGE_wins NOMERGE_wins    time_s
   none   0.95105   0.90995    1.94500       0      0       -            -            -     35.40
    0.1   0.93470   0.85000    2.60000       1      0       0            4            6     24.30
@@ -30,14 +10,9 @@ MERGE(tau)  SUMMARY  vs the common NO-MERGE baseline
    0.3   0.94123   0.90476    2.33333       0      0       0            4            6     56.65
    0.4   0.95399   0.91667    1.82326       0      0       0            6            4     74.60
 
-(exact = #graphs hitting the exact optimum; over = #overshoots;
- same/MERGE_wins/NOMERGE_wins = head-to-head vs NO-MERGE on |error|.)
 
-Best threshold by exact hits then mean ratio: tau = 0.2 (mean_r=0.95489, exact=4/10).
+PER-GRAPH MAXCUT
 
-------------------------------------------------------------------------------------------------
-PER-GRAPH MAXCUT  (optimal | NO-MERGE | MERGE at each tau)
-------------------------------------------------------------------------------------------------
 graph  optimal    NOMERGE  MERGE@0.1  MERGE@0.2  MERGE@0.3  MERGE@0.4
     0     42.0    38.8450    38.0000    38.0000    38.0000    39.0000
     1     40.0    36.3981    34.0000    40.0000    37.0000    39.6667
@@ -50,9 +25,6 @@ graph  optimal    NOMERGE  MERGE@0.1  MERGE@0.2  MERGE@0.3  MERGE@0.4
     8     39.0    36.8611    35.0000    36.0000    37.0000    36.6111
     9     40.0    38.0763    37.0000    36.0000    39.0000    38.6667
 
-------------------------------------------------------------------------------------------------
-PER-GRAPH APPROX RATIO  (NO-MERGE | MERGE at each tau)
-------------------------------------------------------------------------------------------------
 graph  optimal    NOMERGE  MERGE@0.1  MERGE@0.2  MERGE@0.3  MERGE@0.4
     0     42.0     0.9249     0.9048     0.9048     0.9048     0.9286
     1     40.0     0.9100     0.8500     1.0000     0.9250     0.9917
@@ -65,4 +37,3 @@ graph  optimal    NOMERGE  MERGE@0.1  MERGE@0.2  MERGE@0.3  MERGE@0.4
     8     39.0     0.9452     0.8974     0.9231     0.9487     0.9387
     9     40.0     0.9519     0.9250     0.9000     0.9750     0.9667
 
-================================================================================================

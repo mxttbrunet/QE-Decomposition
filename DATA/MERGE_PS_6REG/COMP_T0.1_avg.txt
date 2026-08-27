@@ -1,10 +1,4 @@
-============================================================================================
 DEGREE-6 DENOISED  --  threshold tau = 0.1   (10 repeats per graph)
-============================================================================================
-Generated: 2026-07-01T10:46:57
-Benchmark: 50 random 6-regular graphs on 20 nodes (seed = graph index)
-MERGE(tau=0.1) repeated 10 times per graph (np seed = repeat index);
-NO-MERGE is deterministic (no quantum step), shown for reference.
 
 graph  optimal   NOMERGE   MG_mean   MG_std   MG_min   MG_max MG_mean_r   exact/N
     0     44.0   42.0000   39.6000   1.7436  38.0000  42.0000    0.9000       0/10
@@ -58,5 +52,3 @@ graph  optimal   NOMERGE   MG_mean   MG_std   MG_min   MG_max MG_mean_r   exact/
    48     46.0   46.0000   44.0000   0.0000  44.0000  44.0000    0.9565       0/10
    49     44.0   42.0000   40.8000   2.7129  38.0000  44.0000    0.9273       4/10
 
-mean over graphs:  MERGE mean-ratio = 0.92917   best-of-10 ratio = 0.96934
-============================================================================================

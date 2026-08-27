@@ -1,42 +1,4 @@
 #!/usr/bin/env python3
-"""
-mExps/merge_ablation.py
-=======================
-Controlled ablation that isolates the effect of MERGE's |K|>3 supernode-merge
-step.  Both arms share an IDENTICAL decomposition pipeline so that any
-difference in the result is attributable SOLELY to the merge.
-
-Shared pipeline (both arms)
----------------------------
-  * minimum-node-cut split; eliminate the smallest fragment V2.
-  * EXACT ILP reweight: the boundary-fixed subproblem MaxCut is solved exactly
-    by Gurobi for ALL 2^|K| cut-node colorings (mt.solvePartial), then a
-    complete-graph fit with a NONNEGATIVE slack/"error" term e_i >= 0,
-    minimizing sum(e_i).  Because e_i >= 0 the surrogate underestimates every
-    assignment -> always a valid lower bound (overshoot-safe).
-  * stop at |V| <= M; final reduced graph solved EXACTLY by brute force.
-
-This is exactly the "ILP + error-term reweight using Gurobi" recipe, used by
-BOTH arms.
-
-The ONLY difference
--------------------
-  NO-MERGE : when |K|>3 the |K|-node complete graph is reweighted directly.
-             The pairwise surrogate cannot represent >2-way interactions, so the
-             nonnegative slack underestimates -> valid but lossy.
-  MERGE    : when |K|>3, QAOA-correlated cut nodes are first merged into
-             supernodes (|K| -> <=3), THEN reweighted, so the pairwise surrogate
-             is exact again -- unless the correlation-based merge groups nodes
-             that should actually differ (its own error source).
-
-Theory recap (why |K|<=3 is the boundary):
-  The fragment value is flip-invariant, f(x)=f(~x), so it has 2^(|K|-1)
-  distinct values; the surrogate has 1 + C(|K|,2) parameters.
-      |K|=2 -> 2 values, 2 params  (exact)
-      |K|=3 -> 4 values, 4 params  (exact, full-rank XOR basis)
-      |K|=4 -> 8 values, 7 params  (NOT exact -> slack)
-"""
-
 import os
 import sys
 import time
@@ -52,16 +14,10 @@ import networkx as nx
 import gurobipy as gp
 from gurobipy import GRB
 
-QAOA_DIR = "/home/mxttbrunet/QAOA-Graph-Decomp"
-MERGE_DIR = "/home/mxttbrunet/QE-Decomposition"
-sys.path.insert(0, QAOA_DIR)
-sys.path.insert(0, MERGE_DIR)
-
 import MERGE_TEMP1 as mt          # getInduced, mergeAndUpdate2, bruteMaxCut, solvePartial, M, tau
 mt.draw = lambda *a, **k: None    # disable plotting
 import COMP_DECOMP as cd          # cd.solver = exact optimal MaxCut
 
-OUT_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "MERGE_ABLATION.txt")
 
 N_GRAPHS = 30
 N_NODES = 14
@@ -83,10 +39,6 @@ def quiet(fn, *a, **k):
         return fn(*a, **k)
 
 
-# ---------------------------------------------------------------------------
-# Exact-ILP + nonnegative-slack reweight (shared by both arms).
-# Returns (J dict, total slack = sum e_i).
-# ---------------------------------------------------------------------------
 def reweightFull(sub, K, V2):
     K = list(K)
     sub = sub.copy()
@@ -121,9 +73,6 @@ def reweightFull(sub, K, V2):
     return res, slack
 
 
-# ---------------------------------------------------------------------------
-# Unified decomposition; use_merge is the single toggle under study.
-# ---------------------------------------------------------------------------
 def run_decompo(g, limit, use_merge):
     gNum = -1
     cg = g.copy()
@@ -191,9 +140,6 @@ def run_decompo(g, limit, use_merge):
     }
 
 
-# ---------------------------------------------------------------------------
-# Report
-# ---------------------------------------------------------------------------
 def write_report(rows):
     nm = np.array([r["nomerge"]["cut"] for r in rows])
     mm = np.array([r["merge"]["cut"] for r in rows])

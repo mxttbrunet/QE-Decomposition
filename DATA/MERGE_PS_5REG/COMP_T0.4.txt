@@ -1,36 +1,13 @@
-====================================================================================
-MERGE ABLATION  --  threshold tau = 0.4
-NO-MERGE  vs  MERGE(tau=0.4)
-====================================================================================
-Generated: 2026-06-30T18:15:17
-Benchmark: 10 random 5-regular graphs on 20 nodes (seed = graph index)
+OVERALL SUMMARY 
 
-Both arms: identical pipeline (min-node-cut split, exact ILP reweight +
-nonnegative slack LP, stop at |V|<=M=5, exact brute-force final solve).
-Only difference: MERGE collapses cut-node pairs with <Z_iZ_j> >= 0.4 into
-supernodes when |K|>3, then reweights; NO-MERGE reweights the clique directly.
-Merge arm uses a shot-based QAOA simulator -> mildly stochastic.
-
-------------------------------------------------------------------------------------
-OVERALL SUMMARY (10 graphs)
-------------------------------------------------------------------------------------
 metric                               NO-MERGE     MERGE(0.4)
 mean approx ratio                    0.951045       0.953991
 min approx ratio                     0.909954       0.916667
 max approx ratio                     0.994152       0.991667
-mean |error| from optimal            1.945004       1.823264
-exact-optimal hits                          0              0
-overshoots (ratio>1)                        0              0
-total decomp time (s)                 35.3957        74.5951
 
-Head-to-head (accuracy vs exact optimum):
-  identical result            : 0 graphs
-  MERGE strictly closer       : 6 graphs
-  NO-MERGE strictly closer    : 4 graphs
 
-------------------------------------------------------------------------------------
 PER-GRAPH COMPARISON
-------------------------------------------------------------------------------------
+
 graph optimal    NOMERGE      MERGE  NM_ratio  MG_ratio   |K|>3  merged verdict
     0    42.0    38.8450    39.0000    0.9249    0.9286      15       3 MERGE+
     1    40.0    36.3981    39.6667    0.9100    0.9917      15       4 MERGE+
@@ -43,4 +20,3 @@ graph optimal    NOMERGE      MERGE  NM_ratio  MG_ratio   |K|>3  merged verdict
     8    39.0    36.8611    36.6111    0.9452    0.9387      15       1 NOMERGE+
     9    40.0    38.0763    38.6667    0.9519    0.9667      14       2 MERGE+
 
-====================================================================================

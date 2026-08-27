@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
-"""Trace QAOA-Decomposition vs MERGE FINAL on benchmark graph 3."""
+
 import sys, io, contextlib
-sys.path.insert(0, "/home/mxttbrunet/QAOA-Graph-Decomp")
-sys.path.insert(0, "/home/mxttbrunet/QE-Decomposition")
 
 import numpy as np
 import networkx as nx
@@ -28,11 +26,6 @@ opt = quiet(cd.solver, G)
 print("Exact optimal MaxCut (Gurobi ILP) =", opt)
 print()
 
-# ----------------------------------------------------------------------------
-# PART A: the round-1 elimination subproblem -- EXACT vs p=1 QAOA on the SAME H
-# Replicate ReductionG's first-iteration relabel, then compare the repo's own
-# exact solver (FixedNodeSubgraphSolver) against its p=1 QAOA (QAOANodeIter).
-# ----------------------------------------------------------------------------
 np.random.seed(0)
 Gr = G.copy()
 node_cut = nx.minimum_node_cut(Gr)
@@ -74,9 +67,6 @@ print(">> p=1 QAOA underestimates the eliminated fragment on every assignment;")
 print("   these biased values are what get baked into the reduced graph.")
 print()
 
-# ----------------------------------------------------------------------------
-# PART B: MERGE's exact reweight of the SAME fragment is lossless
-# ----------------------------------------------------------------------------
 print("-"*78)
 print("PART B  MERGE reweight of the same round-1 fragment (exact ILP + slack LP)")
 print("-"*78)
@@ -112,18 +102,13 @@ print(">> slack is ~0: the pairwise reweight reproduces the exact fragment value
 print("   on every boundary assignment -> NO information lost.")
 print()
 
-# ----------------------------------------------------------------------------
-# PART C: end-to-end, including the FINAL solve
-# ----------------------------------------------------------------------------
 print("-"*78)
 print("PART C  End-to-end result + final-solve step")
 print("-"*78)
 
-# QAOA-Decomposition full pipeline
 np.random.seed(0)
 qreduced, qconst, _ = quiet(cd.ReductionG, G.copy())
 qfinal, _ = quiet(cd.Decomp_QAOA_Node, qreduced, qconst)
-# what an EXACT solve of the same final reduced graph would give:
 qfinal_exact = quiet(cd.solver, qreduced) + qconst
 print("QAOA-Decomp final reduced graph : %d nodes, %d edges"
       % (qreduced.number_of_nodes(), qreduced.number_of_edges()))

@@ -1,39 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-"""
-COMP_DECOMP.py
-==============
-Self-contained driver that runs THIS directory's QAOA graph-decomposition
-algorithm on a single hardcoded graph and writes a comparison report to
-``DEC_ANALYSIS.txt``.
-
-Pipeline (matches QAOADecomp.py)
---------------------------------
-1.  ``solver(G)``               -> exact MaxCut of the original graph via Gurobi
-                                   (the reference "optimal solution").
-2.  ``ReductionG(G)``           -> iteratively decomposes G across minimum node
-                                   cuts. Each cut set + one side is solved over
-                                   all partial qubit assignments (analytic p=1
-                                   QAOA), and a small complete graph of new edge
-                                   weights is fit (Gurobi LP) so the reduced
-                                   graph's MaxCut lower-bounds the original.
-                                   Returns the reduced graph + an additive
-                                   constant accumulated across iterations.
-3.  ``Decomp_QAOA_Node(Gr,c)``  -> solves the final reduced graph with the same
-                                   analytic p=1 QAOA and adds the constant. This
-                                   is the final MaxCut produced by the algorithm.
-
-The algorithm code below is copied verbatim from QAOADecomp.py / kCutCode.py
-(only Jupyter magics and matplotlib/plotting were stripped so the module is
-importable as plain Python).
-
-Output (DEC_ANALYSIS.txt)
--------------------------
-- Final decomposition-algorithm MaxCut result
-- Optimal (exact) MaxCut solution
-- Approximation ratio (decomposition / optimal)
-- Time taken by the decomposition algorithm
-"""
 
 import math
 import time
@@ -45,15 +9,10 @@ import networkx as nx
 from scipy.optimize import minimize
 from gurobipy import *
 
-# Seed so the (random-restart) QAOA optimization is reproducible run-to-run.
 np.random.seed(0)
 
 
-# ---------------------------------------------------------------------------
-# Partial-assignment / bitstring helpers (from QAOADecomp.py)
-# ---------------------------------------------------------------------------
 def perms(n):
-    """Yield every n-bit string, zero padded, as a str."""
     if not n:
         return
     for i in range(2 ** n):
@@ -63,7 +22,6 @@ def perms(n):
 
 
 def stringArrayconvertor(arr):
-    """Turn a list of bit-strings into a list of int lists."""
     a = []
     for string in arr:
         a.append([int(j) for j in string])
@@ -75,7 +33,6 @@ def partialAssignment(n):
 
 
 def partialAssignMixer(n, d):
-    """Bitstrings of length n+d (n cut qubits + d dummy qubits)."""
     strings = list(perms(n))
     dummystrings = list(perms(d))
     if len(dummystrings) == 0:
@@ -88,11 +45,7 @@ def partialAssignMixer(n, d):
     return a
 
 
-# ---------------------------------------------------------------------------
-# h_i / J_ij generation (from QAOADecomp.py)
-# ---------------------------------------------------------------------------
 def NodeWeightGen(n_nodes):
-    # Original code uses rand.randint(0,0) -> all zeros (pure MaxCut, no field).
     return np.zeros(n_nodes)
 
 
@@ -105,9 +58,6 @@ def nxnEdgeWeightArray(G, n_nodes):
     return nxnEdgeArray
 
 
-# ---------------------------------------------------------------------------
-# Analytic p=1 QAOA expectation value (from QAOADecomp.py Function class)
-# ---------------------------------------------------------------------------
 class Function():
     def __init__(self, h, J, constant, G):
         self.G = G
@@ -123,7 +73,6 @@ class Function():
         beta = angles[0]
         gamma = angles[1]
 
-        # C_i expectation values
         loc = []
         for i in G.nodes:
             c_i = h[i] * np.sin(2 * beta) * np.sin(2 * gamma * h[i])
@@ -168,12 +117,9 @@ class Function():
             coup.append(c_ij)
 
         func = sum(loc) + sum(coup)
-        return func * (1)  # for maximize
+        return func 
 
 
-# ---------------------------------------------------------------------------
-# Graph wrapper: fix qubits + optimize analytic QAOA (from QAOADecomp.py)
-# ---------------------------------------------------------------------------
 class GraphClass():
     def __init__(self, G, zero_qubits, one_qubits):
         self.G = G
@@ -251,9 +197,7 @@ class GraphClass():
         return actualSol, opt_angles
 
 
-# ---------------------------------------------------------------------------
-# Exact MaxCut via Gurobi (from kCutCode.py solver) -> "optimal solution"
-# ---------------------------------------------------------------------------
+# Exact MaxCut via Gurobi
 def solver(G):
     m = Model("mip1")
     m.setParam("OutputFlag", 0)
@@ -275,9 +219,6 @@ def solver(G):
     return m.getObjective().getValue()
 
 
-# ---------------------------------------------------------------------------
-# Gurobi: solve cut set + S1 over all partial assignments (from QAOADecomp.py)
-# ---------------------------------------------------------------------------
 def FixedNodeSolverLoop(G, k, partialAssigning):
     m = Model("MaxCut")
     GNodes = list(G.nodes())
@@ -328,9 +269,6 @@ def FixedNodeSubgraphSolver(G, k, S1, S2, partialAssigning):
     return FixedNodeSolverLoop(H, k, partialAssigning)
 
 
-# ---------------------------------------------------------------------------
-# SP.1 with analytic QAOA (from QAOADecomp.py)
-# ---------------------------------------------------------------------------
 def QAOANodeIter(G, k, S1, S2, partialAssignment_):
     H = G.subgraph([i for i in range((k + S1))])
     template = GraphClass(H, set(), set())
@@ -418,14 +356,11 @@ def QAOASP1(G, k, S1, S2, d_nodes=0):
     return x, obj, const_val
 
 
-# ---------------------------------------------------------------------------
-# Iterative graph reduction across minimum node cuts (from QAOADecomp.py)
-# ---------------------------------------------------------------------------
 def ReductionG(Graph, d_nodes=0):
     G = Graph.copy()
     constant = 0
     Iteration = 0
-    cut_log = []  # (iteration, sorted cut-set nodes, outcome) per iteration
+    cut_log = []
     while len(list(nx.minimum_node_cut(G))) > 0:
         Iteration += 1
         node_cut = nx.minimum_node_cut(G)
@@ -511,20 +446,12 @@ def Decomp_QAOA_Node(G, constant):
     return opt_sol, sub_opt_angles
 
 
-# ---------------------------------------------------------------------------
-# Hardcoded graph set: 30 random 14-node 3-regular graphs
-# ---------------------------------------------------------------------------
 N_GRAPHS = 30
 N_NODES = 14
 DEGREE = 3
 
 
 def build_graphs():
-    """
-    Build N_GRAPHS reproducible random DEGREE-regular graphs on N_NODES nodes.
-    A fixed per-graph seed makes the whole batch deterministic. All edges get
-    unit weight (the decomposition / QAOA code is weighted MaxCut).
-    """
     graphs = []
     for i in range(N_GRAPHS):
         G = nx.random_regular_graph(DEGREE, N_NODES, seed=i)
@@ -534,9 +461,6 @@ def build_graphs():
     return graphs
 
 
-# ---------------------------------------------------------------------------
-# Main: run the decomposition algorithm on every graph and report
-# ---------------------------------------------------------------------------
 def main():
     graphs = build_graphs()
 
@@ -546,10 +470,8 @@ def main():
         print("GRAPH %d / %d : %d nodes, %d edges"
               % (idx, N_GRAPHS, G.number_of_nodes(), G.number_of_edges()))
 
-        # Reference optimal (exact) MaxCut.
         optimal = solver(G)
 
-        # Decomposition algorithm (this is what we time).
         t0 = time.perf_counter()
         reduced_G, constant, cut_log = ReductionG(G)
         decomp_result, _ = Decomp_QAOA_Node(reduced_G, constant)
@@ -589,7 +511,6 @@ def write_report(results):
                  % (N_GRAPHS, DEGREE, N_NODES))
     lines.append("")
 
-    # -------- Aggregate summary --------
     lines.append("-" * 70)
     lines.append("AGGREGATE SUMMARY")
     lines.append("-" * 70)
@@ -602,7 +523,6 @@ def write_report(results):
                     float(np.max(times)), float(np.sum(times))))
     lines.append("")
 
-    # -------- Per-graph table --------
     lines.append("-" * 70)
     lines.append("PER-GRAPH RESULTS")
     lines.append("-" * 70)
@@ -613,7 +533,6 @@ def write_report(results):
                      (r["idx"], r["decomp"], r["optimal"], r["ratio"], r["time"]))
     lines.append("")
 
-    # -------- Per-graph detail incl. cut set per iteration --------
     lines.append("=" * 70)
     lines.append("PER-GRAPH DETAIL (cut set for each decomposition iteration)")
     lines.append("=" * 70)

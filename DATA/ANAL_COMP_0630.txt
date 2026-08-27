@@ -1,30 +1,13 @@
-======================================================================================
 THREE-WAY ALGORITHM COMPARISON
-QAOA-decomp (DEC_ANALYSIS) | MERGE original (MERGE_ANALYSIS) | MERGE_0630 (this run)
-======================================================================================
-Generated: 2026-06-30T13:57:16
-Benchmark: 30 random 3-regular graphs on 14 nodes (seed = index)
-MERGE_0630 = MERGE with the Option B overshoot-safe fallback reweight.
 
---------------------------------------------------------------------------------------
-OVERALL SUMMARY (30 graphs)
---------------------------------------------------------------------------------------
 algorithm         mean_r    min_r    max_r    std_r  mean|err|  max|err|   exact   over    mean_t   total_t
 QAOA-decomp      0.92899  0.79257  1.00000  0.04413     1.2951    3.9412       2      0   75.9726   2279.18
 MERGE orig       0.97425  0.73684  1.02778  0.05576     0.5140    5.0000      17      2    0.5724     17.17
 MERGE_0630       0.97130  0.81579  1.02778  0.04748     0.5667    3.5000      18      1    0.5028     15.08
 
-Legend: mean_r/min_r/max_r/std_r = approx ratio; mean|err|,max|err| =
-absolute distance from exact optimum (lower=better, handles overshoot);
-exact = #graphs hitting the optimum; over = #graphs with ratio>1; t=seconds.
 
-Overshoot graphs (ratio > 1):
-  MERGE original : [12, 23]
-  MERGE_0630     : [23]
-
---------------------------------------------------------------------------------------
 PER-GRAPH APPROXIMATION RATIOS
---------------------------------------------------------------------------------------
+
 graph   optimal   QAOA_ratio MERGEorig_ratio MERGE0630_ratio
     0      18.0     0.960092      0.888889       0.888889 
     1      19.0     0.946654      1.000000       1.000000 
@@ -56,11 +39,8 @@ graph   optimal   QAOA_ratio MERGEorig_ratio MERGE0630_ratio
    27      18.0     0.926284      1.000000       1.000000 
    28      19.0     0.927203      1.000000       1.000000 
    29      19.0     0.963391      1.000000       1.000000 
-  (* = overshoot: reported MaxCut exceeds the true optimum)
 
---------------------------------------------------------------------------------------
 PER-GRAPH MAXCUT VALUES
---------------------------------------------------------------------------------------
 graph   optimal   QAOA_maxcut   MERGEorig_cut   MERGE0630_cut
     0      18.0     17.281648       16.000000       16.000000
     1      19.0     17.986417       19.000000       19.000000
@@ -93,4 +73,3 @@ graph   optimal   QAOA_maxcut   MERGEorig_cut   MERGE0630_cut
    28      19.0     17.616859       19.000000       19.000000
    29      19.0     18.304428       19.000000       19.000000
 
-======================================================================================

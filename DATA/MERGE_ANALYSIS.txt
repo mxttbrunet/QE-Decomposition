@@ -1,23 +1,9 @@
-======================================================================
 MERGE / QE-DECOMPOSITION ALGORITHM ANALYSIS
-(algorithm in QE-Decomposition/MERGE_TEMP1.py)
-======================================================================
-Generated: 2026-06-30T13:08:25
-Batch: 30 random 3-regular graphs on 14 nodes (seed = graph index)
-Stopping rule: reduce while |V| > M, with M = 5
-Final MaxCut = bruteMaxCut(reduced graph) + accumulated seaHat constant
-Note: |K|>3 rounds invoke a shot-based QAOA merge (stochastic).
 
-----------------------------------------------------------------------
-AGGREGATE SUMMARY
-----------------------------------------------------------------------
 Graphs run            : 30
 Approximation ratio   : mean=0.974248  min=0.736842  max=1.027778  std=0.055757
 Time per graph (s)    : mean=0.5724  min=0.0221  max=2.2071  total=17.1714
 
-----------------------------------------------------------------------
-PER-GRAPH RESULTS
-----------------------------------------------------------------------
 graph  decomp_maxcut    optimal   approx_ratio       time_s
     0      16.000000       18.0       0.888889       1.9151
     1      19.000000       19.0       1.000000       1.0442
@@ -50,9 +36,6 @@ graph  decomp_maxcut    optimal   approx_ratio       time_s
    28      19.000000       19.0       1.000000       0.0387
    29      19.000000       19.0       1.000000       0.4229
 
-======================================================================
-PER-GRAPH DETAIL (cut set for each decomposition round)
-======================================================================
 
 GRAPH 0
   Edge list: (0,2), (0,5), (0,7), (1,5), (1,9), (1,13), (2,7), (2,8), (3,4), (3,6), (3,8), (4,7), (4,9), (5,11), (6,9), (6,12), (8,11), (10,11), (10,12), (10,13), (12,13)
@@ -587,4 +570,3 @@ GRAPH 29
   Approximation ratio  : 1.0000000000
   Time taken (s)       : 0.422917
 
-======================================================================
